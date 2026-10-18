@@ -112,9 +112,13 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   border:1px solid rgba(210,245,255,.35);animation:rise linear infinite}
 @keyframes rise{from{transform:translateY(0) scale(.6);opacity:0}14%{opacity:.75}to{transform:translateY(-54vh) scale(1);opacity:0}}
 
-.hero-bottle{position:absolute;left:50%;top:5%;height:66%;width:auto;transform:translateX(-50%);z-index:3;opacity:.96;
-  filter:brightness(1.45) contrast(1.08) drop-shadow(0 26px 40px rgba(0,0,0,.5)) drop-shadow(0 0 60px rgba(130,225,250,.55));
-  animation:bob 9s ease-in-out infinite;will-change:transform}
+.hero-bottle{position:absolute;left:50%;top:3%;height:46svh;width:24svh;transform:translateX(-50%);z-index:3;
+  animation:bob 9s ease-in-out infinite;will-change:transform;touch-action:pan-y}
+.hero-bottle canvas{width:100%;height:100%;display:block;cursor:grab}
+.hero-bottle canvas:active{cursor:grabbing}
+.hero-bottle img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .8s;
+  filter:brightness(1.4) contrast(1.06) drop-shadow(0 26px 40px rgba(0,0,0,.5))}
+.hero-bottle.live img{opacity:0;pointer-events:none}
 @keyframes bob{0%,100%{translate:0 -10px;rotate:-1.2deg}50%{translate:0 12px;rotate:1.2deg}}
 .hero-glow{position:absolute;left:50%;top:2%;width:min(52vw,440px);aspect-ratio:1;transform:translateX(-50%);z-index:2;
   background:radial-gradient(circle,rgba(120,220,245,.26),transparent 64%);filter:blur(18px)}
@@ -133,7 +137,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   align-items:center;gap:9px;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:#7fa3b5}
 .cue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--accent),transparent);animation:cue 2.4s ease-in-out infinite}
 @keyframes cue{0%,100%{opacity:.2;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
-@media(max-width:700px){.hero{--wl:33%}.hero-copy{top:9%}.hero-bottle{top:8%;height:50%}
+@media(max-width:700px){.hero{--wl:33%}.hero-copy{top:9%}.hero-bottle{top:6%;height:34svh;width:17.7svh}
   .hero-sub{font-size:.85rem;margin-top:14px}.hero-cta{bottom:25%}.stats{grid-template-columns:repeat(2,1fr);margin-top:-48px}}
 
 
@@ -352,7 +356,10 @@ footer nav a:hover{color:var(--accent)}
     <div class="refl" data-par="-0.10"></div>
     <div class="rays"></div>
     <div class="hero-glow"></div>
-    <img class="hero-bottle" src="assets/products/0750-gls.png" alt="" width="609" height="960">
+    <div class="hero-bottle" id="bottle3d">
+      <canvas></canvas>
+      <img src="assets/products/0750-gls.png" alt="MTIS glass bottle">
+    </div>
   </div>
   <div class="surface" aria-hidden="true"></div>
 
@@ -686,6 +693,152 @@ const close = () => lb.classList.remove('on');
 lb.onclick = close;
 addEventListener('keydown', e => e.key === 'Escape' && close());
 
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+/* The bottle is lathed from the silhouette of the real 0.750 GLS render,
+   so the proportions are the ones in the product shot. */
+const BODY = [[0,0.0937],[0.0164,0.1447],[0.0327,0.1528],[0.0491,0.1566],[0.0654,0.1572],[0.083,0.1572],[0.0994,0.156],[0.1157,0.1553],[0.1321,0.1541],[0.1484,0.1528],[0.1648,0.1516],[0.1811,0.1509],[0.1975,0.1497],[0.2138,0.1484],[0.2302,0.1472],[0.2478,0.1459],[0.2642,0.1453],[0.2805,0.144],[0.2969,0.1428],[0.3132,0.1415],[0.3296,0.1409],[0.3459,0.1396],[0.3623,0.1384],[0.3786,0.1371],[0.3962,0.1358],[0.4126,0.1352],[0.4289,0.134],[0.4453,0.1333],[0.4616,0.1333],[0.478,0.1333],[0.4943,0.134],[0.5107,0.1352],[0.527,0.1358],[0.5447,0.1377],[0.561,0.139],[0.5774,0.1409],[0.5937,0.1428],[0.6101,0.144],[0.6264,0.1453],[0.6428,0.1472],[0.6591,0.1491],[0.6755,0.1503],[0.6931,0.1522],[0.7094,0.1535],[0.7258,0.1547],[0.7421,0.156],[0.7585,0.1547],[0.7748,0.1522],[0.7912,0.1472],[0.8075,0.1396],[0.8239,0.1302],[0.8403,0.1164],[0.8579,0.0962],[0.8742,0.0736],[0.8906,0.0585],[0.9069,0.0522],[0.9233,0.0491]];
+const CAP = {y0:0.9233, y1:1.0, r0:0.0516, r1:0.0428};
+const LABEL = {y0:0.547, y1:0.668, w:0.160};
+
+const host = document.getElementById('bottle3d');
+const canvas = host.querySelector('canvas');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+try {
+  const THREE = await import('three');
+  
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.02;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, .1, 50);
+  camera.position.set(0, .52, 2.45);
+  camera.lookAt(0, .5, 0);
+
+  /* a studio-strip environment: dark below, light above, two highlight bars.
+     Glass needs something to reflect, and a white room makes it look like milk. */
+  const ec = document.createElement('canvas'); ec.width = 128; ec.height = 512;
+  const ex = ec.getContext('2d');
+  const grad = ex.createLinearGradient(0, 0, 0, 512);
+  grad.addColorStop(0, '#ffffff'); grad.addColorStop(.12, '#bfe6f5');
+  grad.addColorStop(.3, '#2d6c8c'); grad.addColorStop(.55, '#0c2d42');
+  grad.addColorStop(.8, '#061a28'); grad.addColorStop(1, '#030d16');
+  ex.fillStyle = grad; ex.fillRect(0, 0, 128, 512);
+  ex.fillStyle = '#ffffff';
+  ex.fillRect(14, 40, 16, 300); ex.fillRect(84, 70, 10, 250);
+  ex.filter = 'blur(6px)'; ex.drawImage(ec, 0, 0); ex.filter = 'none';
+  const envTex = new THREE.CanvasTexture(ec);
+  envTex.mapping = THREE.EquirectangularReflectionMapping;
+  envTex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromEquirectangular(envTex).texture;
+
+  const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(2.4, 3.4, 2.2); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9fe8ff, 1.6); rim.position.set(-2.6, 1.2, -1.8); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xbfe4f2, .8); fill.position.set(0, -1.5, 2); scene.add(fill);
+
+  const bottle = new THREE.Group();
+  scene.add(bottle);
+
+  const radiusAt = t => {
+    for (let i = 1; i < BODY.length; i++)
+      if (BODY[i][0] >= t) {
+        const [t0, r0] = BODY[i-1], [t1, r1] = BODY[i];
+        return r0 + (r1 - r0) * (t - t0) / (t1 - t0 || 1);
+      }
+    return BODY[BODY.length-1][1];
+  };
+
+  const pts = [new THREE.Vector2(0, BODY[0][0])];
+  for (const [t, r] of BODY) pts.push(new THREE.Vector2(r, t));
+  pts.push(new THREE.Vector2(0, BODY[BODY.length-1][0]));
+
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, metalness: 0, roughness: .035, transmission: .92, opacity: .58,
+    thickness: .24, ior: 1.46, clearcoat: .35, clearcoatRoughness: .06, envMapIntensity: 1.7,
+    attenuationColor: 0x8fd4ea, attenuationDistance: .8,
+    transparent: true, side: THREE.FrontSide});
+  bottle.add(new THREE.Mesh(new THREE.LatheGeometry(pts, 128), glass));
+
+  /* the fill reads through the glass itself; a second transmissive shell only frosts it */
+  /* cap */
+  const capH = CAP.y1 - CAP.y0;
+  const capMesh = new THREE.Mesh(new THREE.CylinderGeometry(CAP.r1, CAP.r0, capH, 64, 1, false),
+    new THREE.MeshStandardMaterial({color: 0x15325c, metalness: .72, roughness: .34, envMapIntensity: 1.1}));
+  capMesh.position.y = CAP.y0 + capH / 2;
+  bottle.add(capMesh);
+
+  /* the printed label, wrapped on the body at its real height */
+  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png');
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = -1; tex.offset.x = 1;
+  const lr = radiusAt((LABEL.y0 + LABEL.y1) / 2) * 1.004;
+  const theta = 2 * Math.asin(Math.min(.92, (LABEL.w / 2) / lr));
+  const label = new THREE.Mesh(
+    new THREE.CylinderGeometry(lr, lr, LABEL.y1 - LABEL.y0, 96, 1, true, -theta/2, theta),
+    new THREE.MeshStandardMaterial({map: tex, transparent: true, alphaTest: .35, roughness: .45,
+      metalness: 0, side: THREE.FrontSide, envMapIntensity: .5}));
+  label.position.y = (LABEL.y0 + LABEL.y1) / 2;
+  bottle.add(label);
+
+  bottle.position.y = -.02;
+  bottle.rotation.y = 0;
+
+  /* drag to spin, with a slow drift of its own */
+  let vel = 0, dragging = false, lastX = 0;
+  canvas.addEventListener('pointerdown', e => {dragging = true; lastX = e.clientX; canvas.setPointerCapture(e.pointerId);});
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    vel += (e.clientX - lastX) * .00042; lastX = e.clientX;
+  });
+  addEventListener('pointerup', () => dragging = false);
+
+  /* frame the bottle from its own bounds, so it fills the box at any size */
+  const bounds = new THREE.Box3().setFromObject(bottle);
+  const size = bounds.getSize(new THREE.Vector3());
+  const mid = bounds.getCenter(new THREE.Vector3());
+  const resize = () => {
+    const w = host.clientWidth, h = host.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    const vFit = size.y * 1.06;
+    const hFit = (size.x * 1.5) / camera.aspect;
+    const dist = (Math.max(vFit, hFit) / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    camera.position.set(0, mid.y, dist);
+    camera.lookAt(0, mid.y, 0);
+    camera.updateProjectionMatrix();
+  };
+  new ResizeObserver(resize).observe(host);
+  resize();
+
+  let visible = true;
+  new IntersectionObserver(es => visible = es[0].isIntersecting).observe(host);
+
+  renderer.render(scene, camera);
+  host.classList.add('live');
+
+  const tick = () => {
+    requestAnimationFrame(tick);
+    if (!visible || document.hidden) return;
+    if (!reduce) bottle.rotation.y += .0016 + vel;
+    else bottle.rotation.y += vel;
+    vel *= .92;
+    renderer.render(scene, camera);
+  };
+  tick();
+} catch (e) {
+  console.warn('3D bottle unavailable, keeping the still render', e);
+}
 </script>
 </body>
 </html>
