@@ -114,7 +114,9 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   border:1px solid rgba(210,245,255,.35);animation:rise linear infinite}
 @keyframes rise{from{transform:translateY(0) scale(.6);opacity:0}14%{opacity:.75}to{transform:translateY(-54vh) scale(1);opacity:0}}
 
-.hero-bottle{position:absolute;left:50%;top:3%;height:46svh;width:24svh;transform:translateX(-50%);z-index:3;
+.hero-bottle{position:absolute;left:50%;top:0;height:62svh;width:42svh;transform:translateX(-50%);z-index:3;
+  -webkit-mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 48%,rgba(0,0,0,.45) 74%,transparent 100%);
+  mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 48%,rgba(0,0,0,.45) 74%,transparent 100%);
   animation:bob 9s ease-in-out infinite;will-change:transform;touch-action:pan-y}
 .hero-bottle canvas{width:100%;height:100%;display:block;cursor:grab}
 .hero-bottle canvas:active{cursor:grabbing}
@@ -139,7 +141,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   align-items:center;gap:9px;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:#7fa3b5}
 .cue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--accent),transparent);animation:cue 2.4s ease-in-out infinite}
 @keyframes cue{0%,100%{opacity:.2;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
-@media(max-width:700px){.hero{--wl:33%}.hero-copy{top:9%}.hero-bottle{top:6%;height:34svh;width:17.7svh}
+@media(max-width:700px){.hero{--wl:33%}.hero-copy{top:9%}.hero-bottle{top:2%;height:44svh;width:30svh}
   .hero-sub{font-size:.85rem;margin-top:14px}.hero-cta{bottom:25%}.stats{grid-template-columns:repeat(2,1fr);margin-top:-48px}}
 
 
@@ -698,7 +700,8 @@ addEventListener('keydown', e => e.key === 'Escape' && close());
 </script>
 
 <script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+ "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
 <script type="module">
 /* The bottle is lathed from the silhouette of the real 0.750 GLS render,
@@ -716,6 +719,7 @@ try {
   
   const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  renderer.setClearAlpha(0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.02;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -730,9 +734,9 @@ try {
   const ec = document.createElement('canvas'); ec.width = 128; ec.height = 512;
   const ex = ec.getContext('2d');
   const grad = ex.createLinearGradient(0, 0, 0, 512);
-  grad.addColorStop(0, '#ffffff'); grad.addColorStop(.12, '#bfe6f5');
-  grad.addColorStop(.3, '#2d6c8c'); grad.addColorStop(.55, '#0c2d42');
-  grad.addColorStop(.8, '#061a28'); grad.addColorStop(1, '#030d16');
+  grad.addColorStop(0, '#ffffff'); grad.addColorStop(.3, '#eaf5fb');
+  grad.addColorStop(.52, '#b9d6e6'); grad.addColorStop(.74, '#5d8ba6');
+  grad.addColorStop(1, '#27475c');
   ex.fillStyle = grad; ex.fillRect(0, 0, 128, 512);
   ex.fillStyle = '#ffffff';
   ex.fillRect(14, 40, 16, 300); ex.fillRect(84, 70, 10, 250);
@@ -742,6 +746,30 @@ try {
   envTex.colorSpace = THREE.SRGBColorSpace;
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromEquirectangular(envTex).texture;
+
+  /* a real captured environment is what makes glass look like glass;
+     the painted gradient above stays as the fallback */
+  (async () => {
+    try {
+      const {RGBELoader} = await import('three/addons/loaders/RGBELoader.js');
+      const hdr = await new RGBELoader().loadAsync(
+        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/equirectangular/royal_esplanade_1k.hdr');
+      hdr.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = pmrem.fromEquirectangular(hdr).texture;
+    } catch (e) { /* keep the painted environment */ }
+  })();
+
+  /* a round softbox behind the bottle: the glass needs a bright field to bend,
+     and a circle fades out instead of showing a panel edge */
+  const hc = document.createElement('canvas'); hc.width = hc.height = 512;
+  const hx = hc.getContext('2d');
+  const hg = hx.createRadialGradient(256, 236, 40, 256, 256, 252);
+  hg.addColorStop(0, 'rgba(255,255,255,.92)'); hg.addColorStop(.34, 'rgba(226,243,251,.62)');
+  hg.addColorStop(.62, 'rgba(150,205,228,.16)'); hg.addColorStop(1, 'rgba(120,190,220,0)');
+  hx.fillStyle = hg; hx.fillRect(0, 0, 512, 512);
+  const halo = new THREE.Mesh(new THREE.CircleGeometry(.6, 72),
+    new THREE.MeshBasicMaterial({map: new THREE.CanvasTexture(hc), transparent: true, toneMapped: false}));
+  halo.position.set(0, .5, -1.15); scene.add(halo);
 
   const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(2.4, 3.4, 2.2); scene.add(key);
   const rim = new THREE.DirectionalLight(0x9fe8ff, 1.6); rim.position.set(-2.6, 1.2, -1.8); scene.add(rim);
@@ -764,22 +792,50 @@ try {
   pts.push(new THREE.Vector2(0, BODY[BODY.length-1][0]));
 
   const glass = new THREE.MeshPhysicalMaterial({
-    color: 0xffffff, metalness: 0, roughness: .035, transmission: .92, opacity: .58,
-    thickness: .24, ior: 1.46, clearcoat: .35, clearcoatRoughness: .06, envMapIntensity: 1.7,
-    attenuationColor: 0x8fd4ea, attenuationDistance: .8,
-    transparent: true, side: THREE.FrontSide});
+    color: 0xffffff, metalness: 0, roughness: .018, transmission: 1, opacity: 1,
+    thickness: .18, ior: 1.5, clearcoat: .5, clearcoatRoughness: .04, envMapIntensity: 1.25,
+    attenuationColor: 0xcfeef9, attenuationDistance: 4,
+    transparent: true, side: THREE.DoubleSide});
   bottle.add(new THREE.Mesh(new THREE.LatheGeometry(pts, 128), glass));
 
-  /* the fill reads through the glass itself; a second transmissive shell only frosts it */
+  /* the water, filled to just under the shoulder so the fill line shows */
+  const wpts = [new THREE.Vector2(0, .014)];
+  for (const [t, r] of BODY) if (t <= .84) wpts.push(new THREE.Vector2(r * .95, Math.max(t, .014)));
+  wpts.push(new THREE.Vector2(0, .84));
+  bottle.add(new THREE.Mesh(new THREE.LatheGeometry(wpts, 96), new THREE.MeshPhysicalMaterial({
+    color: 0xf2fcff, metalness: 0, roughness: 0, transmission: 1, thickness: .16,
+    ior: 1.333, envMapIntensity: 1.4, attenuationColor: 0xcdeffb, attenuationDistance: 5,
+    transparent: true})));
+
   /* cap */
+  /* the water drop pressed into the lower body */
+  const drop = new THREE.Mesh(new THREE.SphereGeometry(1, 40, 28), glass);
+  drop.scale.set(.052, .072, .026);
+  drop.position.set(0, .17, radiusAt(.17) * .92);
+  bottle.add(drop);
+
   const capH = CAP.y1 - CAP.y0;
-  const capMesh = new THREE.Mesh(new THREE.CylinderGeometry(CAP.r1, CAP.r0, capH, 64, 1, false),
-    new THREE.MeshStandardMaterial({color: 0x15325c, metalness: .72, roughness: .34, envMapIntensity: 1.1}));
-  capMesh.position.y = CAP.y0 + capH / 2;
+  const capGeo = new THREE.CylinderGeometry(CAP.r1, CAP.r0, capH * .88, 72, 1, false);
+  const cpos = capGeo.attributes.position;
+  for (let i = 0; i < cpos.count; i++) {           // knurling
+    const x = cpos.getX(i), z = cpos.getZ(i), r = Math.hypot(x, z);
+    if (r > 1e-4) {
+      const a = Math.atan2(z, x), k = 1 + Math.cos(a * 22) * .022;
+      cpos.setX(i, Math.cos(a) * r * k); cpos.setZ(i, Math.sin(a) * r * k);
+    }
+  }
+  capGeo.computeVertexNormals();
+  const capMesh = new THREE.Mesh(capGeo,
+    new THREE.MeshStandardMaterial({color: 0x16325a, metalness: .78, roughness: .3, envMapIntensity: 1.2}));
+  capMesh.position.y = CAP.y0 + capH * .56;
   bottle.add(capMesh);
+  const collar = new THREE.Mesh(new THREE.CylinderGeometry(CAP.r0 * 1.01, CAP.r0 * 1.01, capH * .16, 64),
+    new THREE.MeshStandardMaterial({color: 0xcfdae6, metalness: .9, roughness: .22, envMapIntensity: 1.3}));
+  collar.position.y = CAP.y0 + capH * .07;
+  bottle.add(collar);
 
   /* the printed label, wrapped on the body at its real height */
-  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label-white.png');
+  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png');
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = -1; tex.offset.x = 1;
@@ -814,8 +870,8 @@ try {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    const vFit = size.y * 1.06;
-    const hFit = (size.x * 1.5) / camera.aspect;
+    const vFit = size.y * 1.18;
+    const hFit = (size.x * 1.7) / camera.aspect;
     const dist = (Math.max(vFit, hFit) / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     camera.position.set(0, mid.y, dist);
     camera.lookAt(0, mid.y, 0);
