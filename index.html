@@ -6,6 +6,8 @@
 <title>MTIS Natural Mineral Water</title>
 <meta name="description" content="MTIS Natural Mineral Water. Sourced from ancient subterranean rock formations beneath Georgia's Natakhtari region.">
 <link rel="icon" href="assets/logo.svg">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
@@ -777,7 +779,7 @@ try {
   bottle.add(capMesh);
 
   /* the printed label, wrapped on the body at its real height */
-  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png');
+  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label-white.png');
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = -1; tex.offset.x = 1;
@@ -785,13 +787,14 @@ try {
   const theta = 2 * Math.asin(Math.min(.92, (LABEL.w / 2) / lr));
   const label = new THREE.Mesh(
     new THREE.CylinderGeometry(lr, lr, LABEL.y1 - LABEL.y0, 96, 1, true, -theta/2, theta),
-    new THREE.MeshStandardMaterial({map: tex, transparent: true, alphaTest: .35, roughness: .45,
-      metalness: 0, side: THREE.FrontSide, envMapIntensity: .5}));
+    /* unlit, so the white print stays as crisp as it is screen printed on the real bottle */
+    new THREE.MeshBasicMaterial({map: tex, transparent: true, alphaTest: .3, opacity: .96,
+      side: THREE.FrontSide, toneMapped: false}));
   label.position.y = (LABEL.y0 + LABEL.y1) / 2;
   bottle.add(label);
 
   bottle.position.y = -.02;
-  bottle.rotation.y = 0;
+  bottle.rotation.y = -.25;
 
   /* drag to spin, with a slow drift of its own */
   let vel = 0, dragging = false, lastX = 0;
