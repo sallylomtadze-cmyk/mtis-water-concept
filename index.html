@@ -10,7 +10,7 @@
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:FiraGO;src:url(assets/fonts/firago-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:FiraGO;src:url(assets/fonts/firago-500.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
@@ -26,9 +26,8 @@
 html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--text);font-family:"Inter","FiraGO","Noto Sans Georgian",system-ui,sans-serif;
   font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,.dsp{font-family:"Fraunces","FiraGO","Noto Sans Georgian",Georgia,serif;font-weight:400;
-  line-height:1.04;letter-spacing:-.022em;font-variation-settings:"opsz" 144,"SOFT" 28,"WONK" 1}
-h2 em,h1 .thin{font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1}
+h1,h2,.dsp{font-family:"FiraGO","Noto Sans Georgian",sans-serif;font-weight:600;text-transform:uppercase;
+  line-height:1.08;letter-spacing:.014em}
 h3{font-family:"Inter","FiraGO",sans-serif;font-weight:500;letter-spacing:.01em;line-height:1.25}
 html[lang=ka] h1,html[lang=ka] h2{font-weight:600;letter-spacing:.005em;line-height:1.12}
 a{color:inherit;text-decoration:none}
@@ -159,8 +158,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 .diagram{position:relative;margin-top:70px;border-radius:clamp(18px,2.4vw,30px);overflow:hidden;
   border:1px solid rgba(10,45,62,.12);background:linear-gradient(180deg,#fbfdfe,#dfeaf2);
   box-shadow:0 44px 100px rgba(9,42,60,.16)}
-.diagram .stage{position:relative;width:100%;aspect-ratio:16/10;min-height:300px}
-.diagram .stage canvas{width:100%;height:100%;display:block}
+.diagram svg.cut{display:block;width:100%;height:auto}
 .pinmark circle{fill:#fff;stroke:#0d6f88;stroke-width:2}
 .pinmark text{fill:#0a2634;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
 .pinmark{opacity:0;transform:translateY(8px);transition:opacity .7s,transform .7s}
@@ -174,7 +172,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 .call{position:relative;padding-top:26px;border-top:1px solid var(--line)}
 .call .n{position:absolute;top:-11px;left:0;width:22px;height:22px;border-radius:50%;
   display:grid;place-items:center;font-size:10px;font-weight:600;color:#fff;background:var(--accent)}
-.call b{display:block;font-family:"Fraunces","FiraGO",serif;font-weight:400;font-variation-settings:"opsz" 72,"SOFT" 30,"WONK" 1;
+.call b{display:block;font-family:"FiraGO",sans-serif;font-weight:600;text-transform:uppercase;
   font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.05;color:var(--text);letter-spacing:-.02em}
 .call span{display:block;margin-top:12px;font-size:.84rem;line-height:1.7;color:var(--muted)}
 @media(max-width:900px){.calls{grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px}}
@@ -229,7 +227,7 @@ h2 em{font-style:normal;color:var(--accent)}
   box-shadow:0 34px 80px rgba(0,0,0,.55),0 0 60px rgba(90,190,220,.10)}
 .stat{background:rgba(7,22,33,.82);backdrop-filter:blur(18px);padding:34px 24px;text-align:center;transition:background .4s}
 .stat:hover{background:rgba(12,34,48,.9)}
-.stat b{display:block;font-family:"Fraunces","FiraGO",serif;font-size:clamp(1.7rem,3vw,2.7rem);text-wrap:balance;font-weight:400;color:var(--text);line-height:1;letter-spacing:-.02em}
+.stat b{display:block;font-family:"FiraGO",sans-serif;font-size:clamp(1.5rem,2.7vw,2.3rem);text-wrap:balance;font-weight:600;color:var(--text);line-height:1.05;letter-spacing:.02em}
 .stat span{display:block;margin-top:11px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
 /* products rail */
@@ -297,7 +295,7 @@ h2 em{font-style:normal;color:var(--accent)}
   opacity:0;transition:opacity .5s}
 .shot-f:hover::after{opacity:1}
 .lockup{border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-bottom:28px}
-.psg-copy h3{font-family:"Fraunces","FiraGO",serif;font-weight:400;font-variation-settings:"opsz" 72,"SOFT" 30,"WONK" 1;letter-spacing:-.02em;
+.psg-copy h3{font-family:"FiraGO",sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.03em;
   font-size:clamp(1.9rem,3.2vw,2.8rem);line-height:1.04;margin-top:4px}
 .psg-copy .pill-note{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:11px 20px;border-radius:999px;
   border:1px solid rgba(111,216,236,.38);background:rgba(111,216,236,.08);color:var(--accent);
@@ -438,7 +436,39 @@ footer nav a:hover{color:var(--accent)}
     <p class="lead rev d1" data-ka="წყალი ნატახტარის ზედაპირიდან იწყებს ჩასვლას და ვულკანური აქტივობითა და ტექტონიკური ძვრებით ჩამოყალიბებულ ფენებს გაივლის. სწორედ იქ იძენს მინერალებს და სწორედ იქ იწმინდება, ჩვენამდე მოღწევამდე დიდი ხნით ადრე.">Water begins its descent at the surface of Natakhtari and passes through strata shaped by volcanic activity and tectonic shifts. That is where it takes on its minerals, and where it is purified, long before it reaches us.</p>
 
     <div class="diagram rev" id="diagram">
-      <div class="stage" id="stage"><canvas></canvas></div>
+      <svg class="cut" viewBox="0 0 1200 760" role="img" aria-label="Cross-section of the MTIS source">
+        <defs>
+          <clipPath id="topClip"><path d="M0 0 H1200 V252 C1020 302 880 252 660 290 C440 328 220 264 0 312 Z"/></clipPath>
+          <linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4fafd"/><stop offset="1" stop-color="#c3d6e3"/></linearGradient>
+          <linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aec5d4"/><stop offset="1" stop-color="#8fa9bd"/></linearGradient>
+          <linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#87a2b6"/><stop offset="1" stop-color="#6a8ca3"/></linearGradient>
+          <linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f85a0"/><stop offset="1" stop-color="#33607d"/></linearGradient>
+          <radialGradient id="gAq"><stop offset="0" stop-color="#7ae8ff" stop-opacity="1"/><stop offset=".55" stop-color="#2fb7d8" stop-opacity=".5"/><stop offset="1" stop-color="#2fb7d8" stop-opacity="0"/></radialGradient>
+          <filter id="soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
+          <filter id="grain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="7"/>
+            <feColorMatrix type="saturate" values="0"/>
+            <feComponentTransfer><feFuncA type="linear" slope=".16"/></feComponentTransfer>
+          </filter>
+          <linearGradient id="deep" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0b2c42" stop-opacity="0"/><stop offset="1" stop-color="#0b2c42" stop-opacity=".28"/>
+          </linearGradient>
+          <path id="flow" d="M300 288 C300 356 352 388 362 448 C372 512 452 552 492 596 C524 632 566 646 600 636 C736 598 842 470 900 372 C938 310 958 286 978 272"/>
+        </defs>
+
+        <image clip-path="url(#topClip)" href="assets/scene/landing.png" x="0" y="-26" width="1200" height="430" preserveAspectRatio="xMidYMid slice"/>
+        <path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252 L1200 332 C1020 382 880 332 660 370 C440 408 220 344 0 392 Z" fill="url(#s1)"/><path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332 L1200 440 C1020 490 880 440 660 478 C440 516 220 452 0 500 Z" fill="url(#s2)"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440 L1200 546 C1020 596 880 546 660 584 C440 622 220 558 0 606 Z" fill="url(#s3)"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546 L1200 720 C1020 770 880 720 660 758 C440 796 220 732 0 780 Z" fill="url(#s4)"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/>
+        <g><ellipse cx="966" cy="686" rx="16.3" ry="4.3" fill="#3f6480" opacity="0.09"/><ellipse cx="428" cy="494" rx="15.6" ry="3.4" fill="#3f6480" opacity="0.10"/><ellipse cx="421" cy="448" rx="11.4" ry="2.4" fill="#3f6480" opacity="0.09"/><ellipse cx="125" cy="704" rx="17.8" ry="4.9" fill="#3f6480" opacity="0.10"/><ellipse cx="362" cy="719" rx="6.2" ry="3.6" fill="#3f6480" opacity="0.05"/><ellipse cx="429" cy="523" rx="13.2" ry="4.3" fill="#3f6480" opacity="0.08"/><ellipse cx="440" cy="665" rx="8.8" ry="2.9" fill="#3f6480" opacity="0.05"/><ellipse cx="214" cy="634" rx="13.9" ry="3.2" fill="#3f6480" opacity="0.09"/><ellipse cx="210" cy="530" rx="9.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="183" cy="688" rx="15.2" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="831" cy="434" rx="17.5" ry="4.5" fill="#3f6480" opacity="0.05"/><ellipse cx="469" cy="426" rx="11.6" ry="4.9" fill="#3f6480" opacity="0.08"/><ellipse cx="189" cy="689" rx="13.6" ry="4.3" fill="#3f6480" opacity="0.07"/><ellipse cx="218" cy="559" rx="10.0" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="281" cy="468" rx="9.0" ry="2.3" fill="#3f6480" opacity="0.05"/><ellipse cx="1037" cy="490" rx="14.2" ry="2.6" fill="#3f6480" opacity="0.09"/><ellipse cx="308" cy="614" rx="13.7" ry="2.3" fill="#3f6480" opacity="0.08"/><ellipse cx="475" cy="400" rx="9.2" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="662" cy="410" rx="8.5" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="245" cy="421" rx="17.9" ry="2.6" fill="#3f6480" opacity="0.07"/><ellipse cx="713" cy="551" rx="10.6" ry="2.2" fill="#3f6480" opacity="0.07"/><ellipse cx="537" cy="407" rx="13.2" ry="3.1" fill="#3f6480" opacity="0.09"/><ellipse cx="1030" cy="694" rx="7.6" ry="3.2" fill="#3f6480" opacity="0.10"/><ellipse cx="676" cy="516" rx="15.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="442" cy="598" rx="16.6" ry="3.8" fill="#3f6480" opacity="0.08"/><ellipse cx="252" cy="455" rx="6.5" ry="4.9" fill="#3f6480" opacity="0.07"/><ellipse cx="842" cy="531" rx="11.0" ry="4.7" fill="#3f6480" opacity="0.09"/><ellipse cx="1105" cy="489" rx="17.2" ry="4.9" fill="#3f6480" opacity="0.06"/><ellipse cx="1021" cy="686" rx="13.8" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="474" cy="504" rx="15.0" ry="2.2" fill="#3f6480" opacity="0.08"/><ellipse cx="550" cy="430" rx="6.6" ry="2.8" fill="#3f6480" opacity="0.09"/><ellipse cx="309" cy="447" rx="10.3" ry="4.7" fill="#3f6480" opacity="0.13"/><ellipse cx="1108" cy="699" rx="17.4" ry="3.8" fill="#3f6480" opacity="0.12"/><ellipse cx="1012" cy="583" rx="14.4" ry="4.9" fill="#3f6480" opacity="0.05"/><ellipse cx="193" cy="646" rx="6.8" ry="2.9" fill="#3f6480" opacity="0.06"/><ellipse cx="188" cy="438" rx="11.4" ry="3.1" fill="#3f6480" opacity="0.05"/><ellipse cx="305" cy="574" rx="10.2" ry="4.1" fill="#3f6480" opacity="0.12"/><ellipse cx="894" cy="415" rx="16.4" ry="3.7" fill="#3f6480" opacity="0.10"/><ellipse cx="823" cy="594" rx="13.0" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="276" cy="531" rx="16.6" ry="4.2" fill="#3f6480" opacity="0.08"/></g>
+        <ellipse cx="600" cy="638" rx="340" ry="64" fill="url(#gAq)" filter="url(#soft)"/>
+        <ellipse cx="600" cy="638" rx="252" ry="36" fill="url(#gAq)"/>
+
+        <rect x="0" y="312" width="1200" height="448" fill="url(#deep)"/>
+        <rect x="0" y="300" width="1200" height="460" filter="url(#grain)" opacity=".5" style="mix-blend-mode:multiply"/>
+        <use href="#flow" stroke="rgba(8,52,74,.78)" stroke-width="2.6" stroke-dasharray="2 7" fill="none"/>
+        <circle class="drop" r="6.5"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#flow"/></animateMotion></circle>
+
+        <g class="pinmark"><circle cx="300" cy="288" r="14"/><text x="300" y="293">1</text></g><g class="pinmark"><circle cx="362" cy="448" r="14"/><text x="362" y="453">2</text></g><g class="pinmark"><circle cx="600" cy="638" r="14"/><text x="600" y="643">3</text></g><g class="pinmark"><circle cx="978" cy="272" r="14"/><text x="978" y="277">4</text></g>
+      </svg>
 
       </div>
 
@@ -853,7 +883,12 @@ try {
     new THREE.MeshBasicMaterial({map: tex, transparent: true, alphaTest: .3, opacity: .96,
       side: THREE.FrontSide, toneMapped: false}));
   label.position.y = (LABEL.y0 + LABEL.y1) / 2;
-  bottle.add(label);
+  /* kept out of the main scene: the glass refracts whatever is behind it,
+     which flipped the print. Drawn in its own pass over the bottle instead. */
+  const labelScene = new THREE.Scene();
+  const labelRig = new THREE.Group();
+  labelRig.add(label);
+  labelScene.add(labelRig);
 
   bottle.position.y = -.02;
   bottle.rotation.y = -.25;
@@ -916,7 +951,17 @@ try {
 
     spin += vel; vel *= .92;
     bottle.rotation.y = spin + (1 - k) * 1.15 + (reduce ? 0 : Math.sin((now - t0) / 5200) * .34);
+
+    labelRig.position.copy(bottle.position);
+    labelRig.rotation.copy(bottle.rotation);
+    labelRig.scale.copy(bottle.scale);
+    label.material.opacity = .96 * k;
+
+    renderer.autoClear = false;
+    renderer.clear();
     renderer.render(scene, camera);
+    renderer.clearDepth();
+    renderer.render(labelScene, camera);
   };
   tick();
 } catch (e) {
@@ -924,143 +969,6 @@ try {
 }
 </script>
 
-<script type="module">
-/* The source section: a 3D slab of the ground, the landscape on top,
-   the aquifer cut into one end. Same renderer stack as the bottle. */
-const stage = document.getElementById('stage');
-if (stage) try {
-  const THREE = await import('three');
-  const {RoundedBoxGeometry} = await import('three/addons/geometries/RoundedBoxGeometry.js');
-  const canvas = stage.querySelector('canvas');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(26, 1.6, .1, 60);
-
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb6c6, 2.1));
-  const sun = new THREE.DirectionalLight(0xffffff, 2.6);
-  sun.position.set(4, 7, 4); scene.add(sun);
-  const back = new THREE.DirectionalLight(0xbfe4f5, 1.1);
-  back.position.set(-5, 2, -3); scene.add(back);
-
-  /* strata on the cut faces */
-  const rc = document.createElement('canvas'); rc.width = 512; rc.height = 512;
-  const rx = rc.getContext('2d');
-  rx.fillStyle = '#8d7a67'; rx.fillRect(0, 0, 512, 512);
-  for (let y = 0; y < 512; y += 6 + Math.random() * 16) {
-    const h = 5 + Math.random() * 15, t = Math.random();
-    rx.fillStyle = `rgba(${78 + t * 80 | 0},${66 + t * 70 | 0},${54 + t * 62 | 0},.6)`;
-    rx.beginPath();
-    rx.moveTo(0, y);
-    for (let x = 0; x <= 512; x += 64) rx.lineTo(x, y + Math.sin(x / 70 + y) * 4);
-    rx.lineTo(512, y + h); 
-    for (let x = 512; x >= 0; x -= 64) rx.lineTo(x, y + h + Math.sin(x / 70 + y) * 4);
-    rx.closePath(); rx.fill();
-  }
-  for (let i = 0; i < 900; i++) {
-    rx.fillStyle = `rgba(48,38,30,${Math.random() * .2})`;
-    rx.fillRect(Math.random() * 512, Math.random() * 512, 1 + Math.random() * 3, 1 + Math.random() * 2);
-  }
-  const rock = new THREE.CanvasTexture(rc);
-  rock.colorSpace = THREE.SRGBColorSpace;
-  rock.wrapS = rock.wrapT = THREE.RepeatWrapping; rock.repeat.set(2.2, 1);
-
-  const land = await new THREE.TextureLoader().loadAsync('assets/scene/landing.png');
-  land.colorSpace = THREE.SRGBColorSpace;
-  land.repeat.set(1, .6); land.offset.set(0, .28);
-
-  const W = 3.5, H = .74, D = 2.2;
-  const side = new THREE.MeshStandardMaterial({map: rock, roughness: .95, metalness: 0});
-  const top  = new THREE.MeshStandardMaterial({map: land, roughness: .78, metalness: 0});
-  const slab = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .07),
-    [side, side, top, side.clone(), side, side]);
-  slab.material[3].map = rock;
-  scene.add(slab);
-
-  /* the aquifer: water held in the far end of the block */
-  const seaW = W * .52;
-  const sea = new THREE.Mesh(new RoundedBoxGeometry(seaW, H * .9, D, 8, .06),
-    new THREE.MeshPhysicalMaterial({color: 0x3aa8cc, roughness: .05, metalness: 0,
-      transmission: .9, thickness: .9, ior: 1.33, transparent: true,
-      attenuationColor: 0x0d5f7d, attenuationDistance: 1.2, envMapIntensity: 1.1}));
-  sea.position.set(W / 2 + seaW / 2 - .04, -H * .05, 0);
-  scene.add(sea);
-  /* the water surface itself, so the block reads as sea and not as a slab of paint */
-  const wc = document.createElement('canvas'); wc.width = wc.height = 256;
-  const wx = wc.getContext('2d');
-  const wgr = wx.createLinearGradient(0, 0, 0, 256);
-  wgr.addColorStop(0, '#7fd4ea'); wgr.addColorStop(.5, '#2f9cc2'); wgr.addColorStop(1, '#14688a');
-  wx.fillStyle = wgr; wx.fillRect(0, 0, 256, 256);
-  wx.globalAlpha = .5; wx.strokeStyle = '#eafaff'; wx.lineWidth = 2;
-  for (let y = 10; y < 256; y += 16) { wx.beginPath();
-    for (let x = 0; x <= 256; x += 8) wx.lineTo(x, y + Math.sin(x / 18 + y) * 3); wx.stroke(); }
-  const surf = new THREE.Mesh(new THREE.PlaneGeometry(seaW * .98, D * .98),
-    new THREE.MeshStandardMaterial({map: new THREE.CanvasTexture(wc), roughness: .18, metalness: .1}));
-  surf.rotation.x = -Math.PI / 2;
-  surf.position.set(sea.position.x, -H * .05 + H * .45 + .002, 0);
-  scene.add(surf);
-  /* the rock the sea sits on, so the two blocks read as one landscape */
-  const seaBase = new THREE.Mesh(new RoundedBoxGeometry(seaW, H * .3, D, 8, .05), side.clone());
-  seaBase.position.set(sea.position.x, -H / 2 + H * .15, 0);
-  scene.add(seaBase);
-
-  /* soft contact shadow */
-  const sc = document.createElement('canvas'); sc.width = sc.height = 256;
-  const sx = sc.getContext('2d');
-  const sg = sx.createRadialGradient(128, 128, 10, 128, 128, 124);
-  sg.addColorStop(0, 'rgba(14,52,74,.42)'); sg.addColorStop(1, 'rgba(14,52,74,0)');
-  sx.fillStyle = sg; sx.fillRect(0, 0, 256, 256);
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(W * 2.1, D * 2.1),
-    new THREE.MeshBasicMaterial({map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false}));
-  shadow.rotation.x = -Math.PI / 2; shadow.position.set(W * .18, -H / 2 - .02, 0);
-  scene.add(shadow);
-
-  const group = new THREE.Group();
-  [slab, sea, surf, seaBase, shadow].forEach(o => group.add(o));
-  scene.add(group);
-  group.rotation.y = -.42;
-
-  /* frame the whole diorama whatever the container does */
-  const bounds = new THREE.Box3();
-  [slab, sea, seaBase].forEach(o => bounds.expandByObject(o));   /* the shadow plane must not inflate the frame */
-  const sphere = bounds.getBoundingSphere(new THREE.Sphere());
-  const dir = new THREE.Vector3(.14, .56, 1).normalize();
-  const fit = () => {
-    const w = stage.clientWidth, h = stage.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    const vfov = THREE.MathUtils.degToRad(camera.fov);
-    const hfov = 2 * Math.atan(Math.tan(vfov / 2) * camera.aspect);
-    const dist = sphere.radius / Math.sin(Math.min(vfov, hfov) / 2) * .78;
-    camera.position.copy(dir).multiplyScalar(dist).add(sphere.center);
-    camera.lookAt(sphere.center);
-    camera.updateProjectionMatrix();
-  };
-  new ResizeObserver(fit).observe(stage); fit();
-
-  let vis = true, prog = 0;
-  new IntersectionObserver(e => vis = e[0].isIntersecting, {threshold: .05}).observe(stage);
-  const t0 = performance.now();
-  const loop = () => {
-    requestAnimationFrame(loop);
-    if (!vis || document.hidden) return;
-    const r = stage.getBoundingClientRect();
-    prog = 1 - Math.min(1, Math.max(0, (r.top + r.height * .5) / innerHeight));  /* scroll drives the turn */
-    const t = (performance.now() - t0) / 1000;
-    group.rotation.y = -.42 + prog * .5 + (reduce ? 0 : Math.sin(t / 6) * .05);
-    group.rotation.x = .02 + prog * .05;
-    group.position.y = reduce ? 0 : Math.sin(t / 4) * .03;
-    renderer.render(scene, camera);
-  };
-  loop();
-} catch (e) { console.warn('source stage unavailable', e); }
-</script>
 </body>
 </html>
