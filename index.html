@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTIS Natural Mineral Water</title>
+<meta name="description" content="MTIS Natural Mineral Water. Sourced from ancient subterranean rock formations beneath Georgia's Natakhtari region.">
+<link rel="icon" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:FiraGO;src:url(assets/fonts/firago-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:FiraGO;src:url(assets/fonts/firago-500.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:FiraGO;src:url(assets/fonts/firago-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+:root{
+  --ink:#04080e; --deep:#07141f; --panel:#091a27;
+  --accent:#6fd8ec; --accent-2:#2a9cb8; --accent-ink:#0a2d3a;
+  --text:#e3f2f8; --muted:#8aa8b8; --line:rgba(140,200,225,.16);
+  --glass:linear-gradient(170deg,rgba(255,255,255,.085),rgba(255,255,255,.02));
+  --gut:28px; --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:"Inter","FiraGO","Noto Sans Georgian",system-ui,sans-serif;
+  font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,.dsp{font-family:"Instrument Serif","FiraGO","Noto Sans Georgian",Georgia,serif;font-weight:400;
+  line-height:1.02;letter-spacing:-.018em}
+h3{font-family:"Inter","FiraGO",sans-serif;font-weight:500;letter-spacing:.01em;line-height:1.25}
+html[lang=ka] h1,html[lang=ka] h2{font-weight:600;letter-spacing:.005em;line-height:1.12}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1240px,100%);margin-inline:auto;padding-inline:var(--gut)}
+@media(max-width:700px){:root{--gut:16px}}
+
+/* progress + cursor */
+#bar{position:fixed;inset:0 auto auto 0;height:2px;width:0;z-index:99;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 0 14px rgba(111,216,236,.8)}
+#glow{position:fixed;width:460px;height:460px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;
+  background:radial-gradient(circle,rgba(111,216,236,.13),transparent 62%);transition:opacity .5s;transform:translate(-50%,-50%)}
+@media(hover:hover){#glow{opacity:1}}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:16px var(--gut);border-bottom:1px solid transparent;transition:background .45s,border-color .45s,padding .45s}
+.nav.solid{background:rgba(4,8,14,.78);backdrop-filter:blur(18px);border-bottom-color:var(--line);padding-block:11px}
+.nav .logo{width:104px;color:#fff;transition:width .45s}
+.nav.solid .logo{width:88px}
+.nav menu{display:flex;gap:32px;list-style:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.nav menu a{position:relative;padding-block:6px}
+.nav menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .4s}
+.nav menu a:hover{color:var(--accent)}
+.nav menu a:hover::after{width:100%}
+@media(max-width:900px){.nav menu{display:none}}
+
+.btn{display:inline-flex;align-items:center;gap:11px;padding:14px 28px;border-radius:999px;border:1px solid rgba(140,215,235,.42);
+  background:rgba(10,32,46,.45);backdrop-filter:blur(10px);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text);transition:.4s;white-space:nowrap}
+.btn:hover{background:rgba(111,216,236,.17);border-color:var(--accent);box-shadow:0 0 36px rgba(111,216,236,.3);transform:translateY(-2px)}
+.btn.sm{padding:10px 20px}
+.navend{display:flex;align-items:center;gap:14px}
+#lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:rgba(10,32,46,.4)}
+#lang button{background:none;border:0;color:var(--muted);font-family:inherit;font-size:10px;letter-spacing:.16em;
+  padding:9px 13px;cursor:pointer;transition:.3s}
+#lang button:hover{color:var(--text)}
+#lang button.on{background:rgba(111,216,236,.18);color:var(--accent)}
+html[lang=ka] .eyebrow,html[lang=ka] .tag,html[lang=ka] .btn,html[lang=ka] .nav menu,
+html[lang=ka] .cue,html[lang=ka] .stat span,html[lang=ka] footer nav,html[lang=ka] .copy{letter-spacing:.12em}
+html[lang=ka] h1,html[lang=ka] h2{letter-spacing:.005em;line-height:1.04}
+html[lang=ka] h1,html[lang=ka] h2,html[lang=ka] h3,html[lang=ka] .tag,html[lang=ka] .eyebrow,
+html[lang=ka] .btn,html[lang=ka] .nav menu a,html[lang=ka] .cue,html[lang=ka] .stat span,
+html[lang=ka] footer nav a,html[lang=ka] .copy span,html[lang=ka] #lang button,
+html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=ka] .prod h3{
+  font-feature-settings:"case" 1}
+.btn i{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+
+/* ---------- HERO: glacier above, water below ---------- */
+.hero{position:relative;height:100svh;min-height:640px;overflow:hidden;isolation:isolate;--wl:36%}
+.glacier{position:absolute;left:0;right:0;top:0;height:46%;z-index:1;
+  background:url(assets/scene/hero-glacier.jpg) center 42%/cover no-repeat;will-change:transform;
+  -webkit-mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.35) 86%,transparent);
+  mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.35) 86%,transparent)}
+.glacier::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(4,14,24,.82) 0%,rgba(4,14,24,.3) 34%,rgba(4,14,24,.1) 62%,transparent 100%),
+  radial-gradient(64% 70% at 50% 42%,transparent 40%,rgba(3,10,18,.55) 100%)}
+.sky{position:absolute;inset:0;z-index:0;background:
+  radial-gradient(70% 46% at 50% 2%,rgba(150,220,240,.34),transparent 64%),
+  linear-gradient(180deg,#0b2435 0%,#0a2032 22%,#061826 34%,#04111c 60%,var(--ink) 100%)}
+.haze{position:absolute;left:-8%;width:116%;top:18%;height:26%;z-index:2;pointer-events:none;filter:blur(34px);
+  background:radial-gradient(52% 54% at 26% 62%,rgba(190,230,245,.30),transparent 72%),
+             radial-gradient(44% 50% at 72% 46%,rgba(150,210,235,.24),transparent 72%);
+  animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-4%,4px,0)}to{transform:translate3d(5%,-10px,0)}}
+
+/* the water body: everything behind it is refracted */
+.sea{position:absolute;left:0;right:0;top:var(--wl);bottom:0;z-index:5;overflow:hidden;
+  backdrop-filter:blur(2.4px) saturate(1.25);-webkit-backdrop-filter:blur(2.4px) saturate(1.25);
+  background:linear-gradient(180deg,rgba(18,86,116,.52) 0%,rgba(9,52,76,.74) 26%,rgba(4,26,40,.9) 62%,rgba(3,12,20,.97) 100%)}
+.refl{position:absolute;left:0;right:0;top:0;height:46%;opacity:.42;will-change:transform;
+  background:url(assets/scene/water-reflection.jpg) center bottom/cover no-repeat;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
+.rays{position:absolute;inset:-10% -20% 20%;opacity:.26;mix-blend-mode:screen;pointer-events:none;
+  background:repeating-linear-gradient(104deg,transparent 0 38px,rgba(190,240,255,.5) 38px 46px,transparent 46px 96px);
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 72%);mask-image:linear-gradient(180deg,#000,transparent 72%);
+  animation:rays 15s ease-in-out infinite alternate}
+@keyframes rays{from{transform:translateX(-26px) skewX(-1deg)}to{transform:translateX(34px) skewX(2deg)}}
+.surface{position:absolute;left:0;right:0;top:var(--wl);height:2px;z-index:6;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(190,245,255,.75) 18%,rgba(220,250,255,.95) 50%,rgba(190,245,255,.75) 82%,transparent);
+  box-shadow:0 0 26px 6px rgba(120,220,245,.38);animation:surf 7s ease-in-out infinite}
+@keyframes surf{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(3px) scaleX(1.01)}}
+.bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.85),rgba(180,235,255,.22) 48%,transparent 70%);
+  border:1px solid rgba(210,245,255,.35);animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(0) scale(.6);opacity:0}14%{opacity:.75}to{transform:translateY(-54vh) scale(1);opacity:0}}
+
+.hero-bottle{position:absolute;left:50%;top:5%;height:66%;width:auto;transform:translateX(-50%);z-index:3;opacity:.96;
+  filter:brightness(1.45) contrast(1.08) drop-shadow(0 26px 40px rgba(0,0,0,.5)) drop-shadow(0 0 60px rgba(130,225,250,.55));
+  animation:bob 9s ease-in-out infinite;will-change:transform}
+@keyframes bob{0%,100%{translate:0 -10px;rotate:-1.2deg}50%{translate:0 12px;rotate:1.2deg}}
+.hero-glow{position:absolute;left:50%;top:2%;width:min(52vw,440px);aspect-ratio:1;transform:translateX(-50%);z-index:2;
+  background:radial-gradient(circle,rgba(120,220,245,.26),transparent 64%);filter:blur(18px)}
+
+.hero-copy{position:absolute;inset:auto 0 auto 0;top:11%;z-index:4;text-align:center;pointer-events:none;will-change:transform}
+.eyebrow{font-size:10.5px;letter-spacing:.44em;text-transform:uppercase;color:#a8e4f4;margin-bottom:20px;padding-inline:var(--gut);text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.hero-copy h1{font-size:clamp(2.5rem,8.6vw,7.1rem);font-weight:600;
+  text-shadow:0 0 70px rgba(120,220,245,.4),0 4px 40px rgba(0,0,0,.55)}
+.hero-copy h1 span{display:inline-block;opacity:0;transform:translateY(.42em) rotate(4deg);filter:blur(8px);
+  animation:letter .95s cubic-bezier(.2,.8,.25,1) forwards}
+@keyframes letter{to{opacity:1;transform:none;filter:none}}
+.hero-copy h1 .thin{font-weight:300;color:var(--accent)}
+.hero-sub{margin:20px auto 0;max-width:46ch;color:#c6dfea;font-size:clamp(.9rem,1.5vw,1.02rem);padding-inline:var(--gut)}
+.hero-cta{position:absolute;left:0;right:0;bottom:23%;z-index:7;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.cue{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);z-index:7;display:flex;flex-direction:column;
+  align-items:center;gap:9px;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:#7fa3b5}
+.cue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--accent),transparent);animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.2;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
+@media(max-width:700px){.hero{--wl:33%}.hero-copy{top:9%}.hero-bottle{top:8%;height:50%}
+  .hero-sub{font-size:.85rem;margin-top:14px}.hero-cta{bottom:25%}.stats{grid-template-columns:repeat(2,1fr);margin-top:-48px}}
+
+
+/* ---------- source cross-section ---------- */
+.diagram{position:relative;margin-top:70px;border-radius:clamp(18px,2.4vw,30px);overflow:hidden;
+  border:1px solid rgba(10,45,62,.12);background:linear-gradient(180deg,#fbfdfe,#dfeaf2);
+  box-shadow:0 44px 100px rgba(9,42,60,.16)}
+.diagram svg.cut{display:block;width:100%;height:auto}
+.pinmark circle{fill:#fff;stroke:#0d6f88;stroke-width:2}
+.pinmark text{fill:#0a2634;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
+.pinmark{opacity:0;transform:translateY(8px);transition:opacity .7s,transform .7s}
+.diagram.in .pinmark{opacity:1;transform:none}
+.diagram.in .pinmark:nth-of-type(2){transition-delay:.12s}
+.diagram.in .pinmark:nth-of-type(3){transition-delay:.24s}
+.diagram.in .pinmark:nth-of-type(4){transition-delay:.36s}
+.drop{fill:#1aa3c4;filter:drop-shadow(0 0 7px rgba(47,183,216,.85))}
+
+.calls{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(22px,3vw,44px);margin-top:54px}
+.call{position:relative;padding-top:26px;border-top:1px solid var(--line)}
+.call .n{position:absolute;top:-11px;left:0;width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;font-size:10px;font-weight:600;color:#fff;background:var(--accent)}
+.call b{display:block;font-family:"Instrument Serif","FiraGO",serif;font-weight:400;
+  font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.05;color:var(--text);letter-spacing:-.02em}
+.call span{display:block;margin-top:12px;font-size:.84rem;line-height:1.7;color:var(--muted)}
+@media(max-width:900px){.calls{grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px}}
+@media(max-width:520px){.calls{grid-template-columns:1fr}}
+
+/* ---------- sections ---------- */
+.band{position:relative;padding:clamp(96px,14vh,180px) 0;z-index:2}
+.band.deep{background:linear-gradient(180deg,var(--ink),var(--deep) 42%,var(--ink))}
+.band.light{--text:#0a2634;--muted:#5a7b8b;--line:rgba(10,45,62,.15);--accent:#0d6f88;
+  --glass:linear-gradient(170deg,#fff,rgba(255,255,255,.66));
+  background:linear-gradient(180deg,#f4f9fb 0%,#e9f2f7 60%,#e2eef4 100%);color:var(--text);
+  border-radius:clamp(28px,4vw,56px) clamp(28px,4vw,56px) 0 0;margin-top:clamp(-56px,-4vw,-28px);z-index:3}
+.band.light + .band{border-radius:clamp(28px,4vw,56px) clamp(28px,4vw,56px) 0 0;margin-top:clamp(-56px,-4vw,-28px);
+  position:relative;z-index:4;background:linear-gradient(180deg,var(--deep),var(--ink) 40%)}
+.band.light .card,.band.light .cert{box-shadow:0 20px 50px rgba(9,42,60,.1);backdrop-filter:none}
+.band.light .stat{background:#fff}
+.band.light .btn{border-color:rgba(10,45,62,.22);background:rgba(255,255,255,.72);color:var(--text)}
+.band.light .btn:hover{background:#0a2634;color:#eaf6fa;border-color:#0a2634;box-shadow:0 14px 34px rgba(9,42,60,.25)}
+.band.light .btn i{background:var(--accent);box-shadow:none}
+.band.light .frame{border-color:var(--line)}
+.band.light .ico{background:linear-gradient(170deg,#fff,#eef5f9);box-shadow:0 10px 22px rgba(9,42,60,.1)}
+.tag{display:flex;align-items:center;gap:14px;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:26px}
+.tag::before{content:attr(data-n);font-size:10.5px;letter-spacing:.14em;opacity:.75}
+.tag::after{content:"";flex:1;max-width:120px;height:1px;background:currentColor;opacity:.32}
+h2{text-wrap:balance}
+h2 em{font-style:italic;color:var(--accent)}
+.lead{font-size:clamp(.98rem,1.25vw,1.08rem);line-height:1.85}
+.band{padding:clamp(104px,15vh,196px) 0}
+h2{font-size:clamp(2.1rem,5.6vw,4.4rem);font-weight:500}
+h2 em{font-style:normal;color:var(--accent)}
+.lead{color:var(--muted);max-width:64ch;margin-top:24px}
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(34px,6vw,86px);align-items:center}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+
+.rev{opacity:0;transform:translateY(42px);filter:blur(6px);
+  transition:opacity .95s cubic-bezier(.2,.75,.3,1),transform .95s cubic-bezier(.2,.75,.3,1),filter .95s}
+.rev.in{opacity:1;transform:none;filter:none}
+.rev.d1{transition-delay:.1s}.rev.d2{transition-delay:.2s}.rev.d3{transition-delay:.3s}.rev.d4{transition-delay:.4s}
+
+.frame{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.8,.3,1)}
+.frame:hover img{transform:scale(1.05)}
+.frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(4,8,14,.75))}
+
+.docs{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+
+/* stats */
+.statwrap{position:relative;z-index:8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:-64px;
+  background:var(--line);border:1px solid rgba(150,215,240,.22);border-radius:var(--r);overflow:hidden;
+  box-shadow:0 34px 80px rgba(0,0,0,.55),0 0 60px rgba(90,190,220,.10)}
+.stat{background:rgba(7,22,33,.82);backdrop-filter:blur(18px);padding:34px 24px;text-align:center;transition:background .4s}
+.stat:hover{background:rgba(12,34,48,.9)}
+.stat b{display:block;font-family:"Instrument Serif","FiraGO",serif;font-size:clamp(1.7rem,3vw,2.7rem);text-wrap:balance;font-weight:400;color:var(--text);line-height:1;letter-spacing:-.02em}
+.stat span{display:block;margin-top:11px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* products rail */
+.rail{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;
+  padding:56px max(var(--gut),calc((100vw - 1240px)/2 + var(--gut))) 40px;
+  scrollbar-width:none;cursor:grab}
+.rail::-webkit-scrollbar{display:none}
+.rail.drag{cursor:grabbing;scroll-snap-type:none}
+.prod{flex:0 0 288px;scroll-snap-align:start;background:var(--glass);border:1px solid var(--line);border-radius:26px;
+  padding:26px 24px 28px;backdrop-filter:blur(14px);text-align:center;position:relative;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .45s,box-shadow .5s}
+.prod:hover{transform:translateY(-6px);border-color:rgba(111,216,236,.45);box-shadow:0 34px 74px rgba(0,0,0,.5),0 0 70px rgba(111,216,236,.12)}
+.prod .shot{height:300px;display:grid;place-items:center;position:relative}
+.prod .shot::before{content:"";position:absolute;width:76%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(150,225,245,.34),transparent 66%);filter:blur(12px);opacity:.5;transition:opacity .6s}
+.prod:hover .shot::before{opacity:1}
+.prod .shot{isolation:isolate}
+.prod .shot img{height:300px;width:100%;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.55)) brightness(1.14) contrast(1.05);
+  transition:transform .7s cubic-bezier(.2,.8,.3,1)}
+.prod:hover .shot img{transform:translateY(-8px)}
+.prod h3{font-size:1.02rem;letter-spacing:.2em;text-transform:uppercase;margin-top:20px;color:var(--text)}
+.prod .pack{margin-top:16px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.prod .pack div{display:flex;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line)}
+.prod .pack b{font-weight:500;color:var(--text);letter-spacing:.06em}
+.dots{display:flex;gap:9px;justify-content:center;margin-top:8px}
+.dots button{width:7px;height:7px;border-radius:50%;border:0;background:rgba(140,200,225,.3);cursor:pointer;transition:.4s;padding:0}
+.dots button.on{background:var(--accent);width:24px;border-radius:999px;box-shadow:0 0 12px rgba(111,216,236,.7)}
+
+/* certificates */
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;margin-top:56px}
+@media(max-width:920px){.certs .card{grid-column:1/-1}}
+.cert{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:20px;backdrop-filter:blur(14px);
+  cursor:zoom-in;transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .5s}
+.cert:hover{border-color:rgba(111,216,236,.45);box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.cert img{width:100%;border-radius:12px;background:#fff}
+.cert p{margin-top:18px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:34px 32px;backdrop-filter:blur(14px)}
+.card h3{font-size:1.02rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;color:var(--text)}
+.ico{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;margin-bottom:18px;
+  background:linear-gradient(170deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid var(--line);
+  box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.ico svg{width:27px;height:27px;display:block;border-radius:6px}
+.ico.sm{width:34px;height:34px;border-radius:11px;margin-top:20px}
+.ico.sm svg{width:20px;height:20px;border-radius:4px}
+.card p{color:var(--muted);font-size:.92rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:22px;margin-top:30px}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:120;display:none;place-items:center;padding:4vh var(--gut);
+  background:rgba(2,6,11,.93);backdrop-filter:blur(10px)}
+#lb.on{display:grid}
+#lb img{max-height:92vh;border-radius:10px;box-shadow:0 40px 90px rgba(0,0,0,.7);animation:pop .5s cubic-bezier(.2,.8,.3,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+#lb .x{position:absolute;top:22px;right:26px;font-size:26px;color:var(--muted);cursor:pointer;line-height:1}
+
+/* partners */
+.psg{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(30px,4.4vw,70px);align-items:center;margin-top:60px}
+.mosaic{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.shot-f{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);aspect-ratio:16/10;
+  background:#07141f}
+.shot-f.big{grid-column:1/-1;aspect-ratio:16/8.4}
+.shot-f img{width:100%;height:100%;object-fit:cover;transition:transform 1.3s cubic-bezier(.2,.8,.3,1)}
+.shot-f:hover img{transform:scale(1.06)}
+.shot-f::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(3,10,18,.45));
+  opacity:0;transition:opacity .5s}
+.shot-f:hover::after{opacity:1}
+.lockup{border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-bottom:28px}
+.psg-copy h3{font-family:"Instrument Serif","FiraGO",serif;font-weight:400;letter-spacing:-.02em;
+  font-size:clamp(1.9rem,3.2vw,2.8rem);line-height:1.04;margin-top:4px}
+.psg-copy .pill-note{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:11px 20px;border-radius:999px;
+  border:1px solid rgba(111,216,236,.38);background:rgba(111,216,236,.08);color:var(--accent);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase}
+.badge{height:clamp(58px,6.4vw,84px);width:auto;border-radius:12px;border:1px solid var(--line);margin-bottom:18px}
+
+.logowall{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:40px}
+.logowall div{background:#060f18;display:grid;place-items:center;padding:34px 20px;min-height:132px;transition:background .45s}
+.logowall div:hover{background:#0b1d2a}
+.logowall img{max-height:48px;max-width:78%;width:auto;object-fit:contain;
+  filter:brightness(0) invert(1) opacity(.62);transition:filter .5s,transform .5s,opacity .5s}
+.logowall div:hover img{filter:none;opacity:1;transform:scale(1.06)}
+.logowall img[alt="Radisson RED"]{filter:none;opacity:.78}
+@media(max-width:900px){.psg{grid-template-columns:1fr}.logowall{grid-template-columns:repeat(2,1fr)}
+  .logowall div{min-height:112px;padding:26px 16px}}
+
+/* finewaters */
+.fw{position:relative;display:grid;place-items:center;width:min(720px,96%);margin:50px auto 0}
+.fw .wreath{width:100%;opacity:.5;filter:brightness(1.7)}
+.fw .fw-logo{position:absolute;height:clamp(52px,7.4vw,86px);border-radius:10px;box-shadow:0 20px 54px rgba(0,0,0,.55)}
+.badge{height:clamp(64px,7vw,92px);width:auto;border-radius:14px;border:1px solid var(--line);margin-bottom:20px}
+
+footer{border-top:1px solid var(--line);background:var(--deep);padding:74px 0 46px;position:relative;z-index:2}
+.fgrid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start}
+footer .logo{width:120px;color:#fff}
+footer nav{display:flex;flex-wrap:wrap;gap:26px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+footer nav a:hover{color:var(--accent)}
+.copy{margin-top:52px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  font-size:10px;letter-spacing:.14em;color:#4e6a79;text-transform:uppercase}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rev{opacity:1;transform:none;filter:none}
+  .hero-copy h1 span{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="glow"></div>
+
+<header class="nav" id="nav">
+  <a href="#top" aria-label="MTIS"><img class="logo" src="assets/logo.svg" alt="MTIS"></a>
+  <menu>
+    <li><a href="#about" data-ka="ჩვენ შესახებ">About</a></li>
+    <li><a href="#source" data-ka="წყარო">Source</a></li>
+    <li><a href="#products" data-ka="პროდუქცია">Products</a></li>
+    <li><a href="#quality" data-ka="ხარისხი">Quality</a></li>
+    <li><a href="#partners" data-ka="პარტნიორები">Partners</a></li>
+    <li><a href="#finewaters">FineWaters</a></li>
+  </menu>
+  <div class="navend">
+    <div id="lang"><button data-l="en">EN</button><button data-l="ka">ქარ</button></div>
+    <a class="btn sm" href="#contact" data-ka="&lt;i&gt;&lt;/i&gt;კონტაქტი"><i></i>Contact</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="sky" aria-hidden="true"></div>
+  <div class="glacier" data-par="0.20" aria-hidden="true"></div>
+  <div class="haze" aria-hidden="true"></div>
+
+  <div class="hero-copy" id="heroCopy">
+    <p class="eyebrow" data-ka="ბუნებრივი მინერალური წყალი · ნატახტარი, საქართველო">Natural Mineral Water · Natakhtari, Georgia</p>
+    <h1 data-split data-ka='დახარჯე სულ.<br><span class="thin">შეავსე.</span>'>Spend it all.<br><span class="thin">Refill.</span></h1>
+    <p class="hero-sub" data-ka="ბუნებამ გაწმინდა ზედაპირზე ამოსვლამდე დიდი ხნით ადრე. ვულკანურმა ქანებმა შექმნა, დრომ დააბალანსა.">Purified by nature long before it reaches the surface. Shaped by volcanic rock, balanced by time.</p>
+  </div>
+
+  <div class="sea" id="sea" aria-hidden="true">
+    <div class="refl" data-par="-0.10"></div>
+    <div class="rays"></div>
+    <div class="hero-glow"></div>
+    <img class="hero-bottle" src="assets/products/0750-gls.png" alt="" width="609" height="960">
+  </div>
+  <div class="surface" aria-hidden="true"></div>
+
+  <div class="hero-cta">
+    <a class="btn" href="#products" data-ka="&lt;i&gt;&lt;/i&gt;ჩვენი პროდუქცია"><i></i>Our products</a>
+    <a class="btn" href="#about" data-ka="წყარო">The source</a>
+  </div>
+  <div class="cue" data-ka="გადააჩოჩეთ">Scroll</div>
+</section>
+
+  <div class="wrap statwrap">
+    <div class="stats rev">
+      <div class="stat"><b data-count="0" data-suffix="%">0</b><span data-ka="ბრომატი, ნულთან ახლოს">Bromate, close to zero</span></div>
+      <div class="stat"><b>ISO 9001</b><span data-ka="ხარისხის მენეჯმენტი">Quality management</span></div>
+      <div class="stat"><b>FSSC 22000</b><span data-ka="სურსათის უვნებლობა">Food safety</span></div>
+      <div class="stat"><b data-count="7">0</b><span data-ka="ბოთლის ფორმატი">Bottle formats</span></div>
+    </div>
+  </div>
+
+<section class="band" id="about">
+  <div class="wrap split">
+    <div>
+      <div class="rev"><p class="tag" data-n="01" data-ka="მთის შესახებ">About MTIS</p>
+      <h2 data-ka='დაფარული საგანძური<br><em>ნატახტარის სიღრმეში</em>'>A hidden treasure<br><em>beneath Natakhtari</em></h2></div>
+      <p class="lead rev d1" data-ka="საქართველოს ნატახტარის რეგიონის ბორცვების სიღრმეში დაფარული საგანძური, მთის ბუნებრივი მინერალური წყალი, იმალება. უძველესი მიწისქვეშა ქანებიდან მომდინარე ეს წყალი საუკუნეების განმავლობაში მიმდინარე გეოლოგიური ევოლუციის შედეგია. ვულკანური აქტივობითა და ტექტონიკური ძვრებით ჩამოყალიბებულ, მინერალებით მდიდარ ფენებში ბუნებრივად გაფილტრული, მთის ყოველი წვეთი ბუნებამ გაწმინდა ზედაპირზე ამოსვლამდე დიდი ხნით ადრე.">Deep beneath the rolling hills of Georgia's Natakhtari region lies a hidden treasure, MTIS Natural Mineral Water. Sourced from ancient subterranean rock formations, this extraordinary water is the result of centuries of geological evolution. Filtered naturally through mineral rich layers shaped by volcanic activity and tectonic shifts, every drop of MTIS is purified by nature long before it reaches the surface.</p>
+      <p class="lead rev d2" data-ka="წვიმის წყალი მიწაში ჟონავს და ნელ, გარდამქმნელ მოგზაურობას იწყებს რეგიონის რთულ გეოლოგიურ ფენებში. გზად ის ითვისებს აუცილებელ მინერალებს, რომლებიც არა მხოლოდ გემოს ამდიდრებს, არამედ ჯანმრთელობისთვისაც სასარგებლოა. შედეგი სრულყოფილად დაბალანსებული, ბუნებრივად მინერალიზებული წყალია, ადამიანის ხელით შეუხებელი, უწმინდესი სახით შენარჩუნებული.">As rainwater seeps through the earth, it embarks on a slow, transformative journey through the region's complex geological strata. Along the way, it absorbs essential minerals that not only enrich its taste but also contribute to its health benefits. The result is a perfectly balanced, naturally mineralized water, untouched by human hands, preserved in its purest form.</p>
+      <div class="docs rev d3">
+        <a class="btn" href="assets/docs/press-release-2026.pdf" target="_blank" rel="noopener" data-ka="&lt;i&gt;&lt;/i&gt;პრეს რელიზი 2026"><i></i>Press Release 2026</a>
+        <a class="btn" href="assets/docs/press-release-2025.pdf" target="_blank" rel="noopener" data-ka="პრეს რელიზი 2025">Press Release 2025</a>
+      </div>
+    </div>
+    <div class="frame rev d2" style="aspect-ratio:4/5">
+      <img src="assets/scene/landing.png" alt="Natakhtari mountains" loading="lazy">
+    </div>
+  </div>
+
+</section>
+
+<section class="band light" id="source">
+  <div class="wrap">
+    <div class="rev"><p class="tag" data-n="02" data-ka="წყარო">The journey</p>
+    <h2 data-ka='წვიმიდან ქანებამდე<br><em>და ბოთლამდე</em>'>From rain to rock<br><em>and into the bottle</em></h2></div>
+    <p class="lead rev d1" data-ka="წყალი ნატახტარის ზედაპირიდან იწყებს ჩასვლას და ვულკანური აქტივობითა და ტექტონიკური ძვრებით ჩამოყალიბებულ ფენებს გაივლის. სწორედ იქ იძენს მინერალებს და სწორედ იქ იწმინდება, ჩვენამდე მოღწევამდე დიდი ხნით ადრე.">Water begins its descent at the surface of Natakhtari and passes through strata shaped by volcanic activity and tectonic shifts. That is where it takes on its minerals, and where it is purified, long before it reaches us.</p>
+
+    <div class="diagram rev" id="diagram">
+      <svg class="cut" viewBox="0 0 1200 760" role="img" aria-label="Cross-section of the MTIS source">
+        <defs>
+          <clipPath id="topClip"><path d="M0 0 H1200 V252 C1020 302 880 252 660 290 C440 328 220 264 0 312 Z"/></clipPath>
+          <linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef6fa"/><stop offset="1" stop-color="#cfdfea"/></linearGradient>
+          <linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9cdda"/><stop offset="1" stop-color="#9bb4c6"/></linearGradient>
+          <linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93aec0"/><stop offset="1" stop-color="#7595ab"/></linearGradient>
+          <linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d90a7"/><stop offset="1" stop-color="#406a85"/></linearGradient>
+          <radialGradient id="gAq"><stop offset="0" stop-color="#5fdcf5" stop-opacity=".95"/><stop offset=".55" stop-color="#2fb7d8" stop-opacity=".5"/><stop offset="1" stop-color="#2fb7d8" stop-opacity="0"/></radialGradient>
+          <filter id="soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
+          <path id="flow" d="M300 288 C300 356 352 388 362 448 C372 512 452 552 492 596 C524 632 566 646 600 636 C736 598 842 470 900 372 C938 310 958 286 978 272"/>
+        </defs>
+
+        <image clip-path="url(#topClip)" href="assets/scene/landing.png" x="0" y="-26" width="1200" height="430" preserveAspectRatio="xMidYMid slice"/>
+        <path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252 L1200 332 C1020 382 880 332 660 370 C440 408 220 344 0 392 Z" fill="url(#s1)"/><path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332 L1200 440 C1020 490 880 440 660 478 C440 516 220 452 0 500 Z" fill="url(#s2)"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440 L1200 546 C1020 596 880 546 660 584 C440 622 220 558 0 606 Z" fill="url(#s3)"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546 L1200 720 C1020 770 880 720 660 758 C440 796 220 732 0 780 Z" fill="url(#s4)"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/>
+        <g><ellipse cx="966" cy="686" rx="16.3" ry="4.3" fill="#3f6480" opacity="0.09"/><ellipse cx="428" cy="494" rx="15.6" ry="3.4" fill="#3f6480" opacity="0.10"/><ellipse cx="421" cy="448" rx="11.4" ry="2.4" fill="#3f6480" opacity="0.09"/><ellipse cx="125" cy="704" rx="17.8" ry="4.9" fill="#3f6480" opacity="0.10"/><ellipse cx="362" cy="719" rx="6.2" ry="3.6" fill="#3f6480" opacity="0.05"/><ellipse cx="429" cy="523" rx="13.2" ry="4.3" fill="#3f6480" opacity="0.08"/><ellipse cx="440" cy="665" rx="8.8" ry="2.9" fill="#3f6480" opacity="0.05"/><ellipse cx="214" cy="634" rx="13.9" ry="3.2" fill="#3f6480" opacity="0.09"/><ellipse cx="210" cy="530" rx="9.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="183" cy="688" rx="15.2" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="831" cy="434" rx="17.5" ry="4.5" fill="#3f6480" opacity="0.05"/><ellipse cx="469" cy="426" rx="11.6" ry="4.9" fill="#3f6480" opacity="0.08"/><ellipse cx="189" cy="689" rx="13.6" ry="4.3" fill="#3f6480" opacity="0.07"/><ellipse cx="218" cy="559" rx="10.0" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="281" cy="468" rx="9.0" ry="2.3" fill="#3f6480" opacity="0.05"/><ellipse cx="1037" cy="490" rx="14.2" ry="2.6" fill="#3f6480" opacity="0.09"/><ellipse cx="308" cy="614" rx="13.7" ry="2.3" fill="#3f6480" opacity="0.08"/><ellipse cx="475" cy="400" rx="9.2" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="662" cy="410" rx="8.5" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="245" cy="421" rx="17.9" ry="2.6" fill="#3f6480" opacity="0.07"/><ellipse cx="713" cy="551" rx="10.6" ry="2.2" fill="#3f6480" opacity="0.07"/><ellipse cx="537" cy="407" rx="13.2" ry="3.1" fill="#3f6480" opacity="0.09"/><ellipse cx="1030" cy="694" rx="7.6" ry="3.2" fill="#3f6480" opacity="0.10"/><ellipse cx="676" cy="516" rx="15.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="442" cy="598" rx="16.6" ry="3.8" fill="#3f6480" opacity="0.08"/><ellipse cx="252" cy="455" rx="6.5" ry="4.9" fill="#3f6480" opacity="0.07"/><ellipse cx="842" cy="531" rx="11.0" ry="4.7" fill="#3f6480" opacity="0.09"/><ellipse cx="1105" cy="489" rx="17.2" ry="4.9" fill="#3f6480" opacity="0.06"/><ellipse cx="1021" cy="686" rx="13.8" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="474" cy="504" rx="15.0" ry="2.2" fill="#3f6480" opacity="0.08"/><ellipse cx="550" cy="430" rx="6.6" ry="2.8" fill="#3f6480" opacity="0.09"/><ellipse cx="309" cy="447" rx="10.3" ry="4.7" fill="#3f6480" opacity="0.13"/><ellipse cx="1108" cy="699" rx="17.4" ry="3.8" fill="#3f6480" opacity="0.12"/><ellipse cx="1012" cy="583" rx="14.4" ry="4.9" fill="#3f6480" opacity="0.05"/><ellipse cx="193" cy="646" rx="6.8" ry="2.9" fill="#3f6480" opacity="0.06"/><ellipse cx="188" cy="438" rx="11.4" ry="3.1" fill="#3f6480" opacity="0.05"/><ellipse cx="305" cy="574" rx="10.2" ry="4.1" fill="#3f6480" opacity="0.12"/><ellipse cx="894" cy="415" rx="16.4" ry="3.7" fill="#3f6480" opacity="0.10"/><ellipse cx="823" cy="594" rx="13.0" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="276" cy="531" rx="16.6" ry="4.2" fill="#3f6480" opacity="0.08"/></g>
+        <ellipse cx="600" cy="638" rx="340" ry="64" fill="url(#gAq)" filter="url(#soft)"/>
+        <ellipse cx="600" cy="638" rx="252" ry="36" fill="url(#gAq)"/>
+
+        <use href="#flow" stroke="rgba(9,60,84,.6)" stroke-width="2.4" stroke-dasharray="2 7" fill="none"/>
+        <circle class="drop" r="6.5"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#flow"/></animateMotion></circle>
+
+        <g class="pinmark"><circle cx="300" cy="288" r="14"/><text x="300" y="293">1</text></g><g class="pinmark"><circle cx="362" cy="448" r="14"/><text x="362" y="453">2</text></g><g class="pinmark"><circle cx="600" cy="638" r="14"/><text x="600" y="643">3</text></g><g class="pinmark"><circle cx="978" cy="272" r="14"/><text x="978" y="277">4</text></g>
+      </svg>
+
+      </div>
+
+      <div class="calls">
+        <div class="call rev"><i class="n">1</i><b data-ka="ნატახტარი">Natakhtari</b>
+          <span data-ka="ჩვენი წყარო მცხეთის მუნიციპალიტეტში, საიდანაც წყალი მიწისქვეშა ქანებში ჩადის.">Our source in the Mtskheta municipality, where the water sinks into subterranean rock.</span></div>
+        <div class="call rev d1"><i class="n">2</i><b data-ka="საუკუნეები">Centuries</b>
+          <span data-ka="გეოლოგიური ევოლუცია: ვულკანური აქტივობითა და ტექტონიკური ძვრებით ჩამოყალიბებული ფენები წყალს ბუნებრივად ფილტრავს.">Of geological evolution. Layers shaped by volcanic activity and tectonic shifts filter the water naturally.</span></div>
+        <div class="call rev d2"><i class="n">3</i><b>≈0%</b>
+          <span data-ka="ბრომატი. მთის არის ქართული ბრენდი ყველაზე დაბალი ბრომატის შემცველობით.">Bromate. MTIS is the Georgian brand with the least bromate in it.</span></div>
+        <div class="call rev d3"><i class="n">4</i><b data-ka="ხელშეუხებელი">Untouched</b>
+          <span data-ka="ადამიანის ხელით შეუხებელი, უწმინდესი სახით შენარჩუნებული წყალი ზედაპირზე ამოდის.">By human hands. The water returns to the surface preserved in its purest form.</span></div>
+      </div>
+
+  </div>
+</section>
+
+<section class="band deep" id="products">
+  <div class="wrap">
+    <div class="rev"><p class="tag" data-n="03" data-ka="ჩვენი პროდუქცია">Our products</p>
+    <h2 data-ka='ყველა ფორმატი,<br><em>ერთი წყარო</em>'>Every format,<br><em>same source</em></h2></div>
+    <p class="lead rev d1" data-ka="ჩვენ ვიცავთ ბაზარზე არსებულ წყლის ხარისხის უმაღლეს სტანდარტებს. კომპანიაში დანერგილია HACCP და FSMS სისტემები, რომლებიც შეესაბამება Coca-Cola KORE-ის მკაცრ ხარისხის პროტოკოლებს, ასევე ეროვნულ რეგულაციებსა და საკანონმდებლო მოთხოვნებს. ხარისხის შენარჩუნების მიზნით, ჩვენი წყალი ყოველწლიურად მოწმდება ჟენევაში. ამ მკაცრი სტანდარტების წყალობით, ჩვენი პროდუქცია აკმაყოფილებს ევროკავშირში ექსპორტის კრიტერიუმებს.">We adhere to the highest water quality standards in the market. Our company has implemented HACCP and FSMS systems, aligned with Coca-Cola KORE's strict quality protocols as well as national regulations and legal requirements. To ensure continued excellence, our water undergoes annual quality testing in Geneva. Thanks to these rigorous standards, our products meet the criteria for export to the European Union.</p>
+  </div>
+
+  <div class="rail" id="rail">
+    <article class="prod"><div class="shot"><img src="assets/products/0330-gls.png" alt="MTIS 0.330 GLS" loading="lazy"></div>
+      <h3>0.330 GLS</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="15 ბოთლი">15 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>132 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/0500-gls.png" alt="MTIS 0.500 GLS" loading="lazy"></div>
+      <h3>0.500 GLS</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="12 ბოთლი">12 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>102 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/0500-pet.png" alt="MTIS 0.500 PET" loading="lazy"></div>
+      <h3>0.500 PET</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="12 ბოთლი">12 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>144 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/0750-gls.png" alt="MTIS 0.750 GLS" loading="lazy"></div>
+      <h3>0.750 GLS</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="6 ბოთლი">6 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>150 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/1500-pet.png" alt="MTIS 1.500 PET" loading="lazy"></div>
+      <h3>1.500 PET</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="6 ბოთლი">6 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>112 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/3000-pet.png" alt="MTIS 3.000 PET" loading="lazy"></div>
+      <h3>3.000 PET</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="4 ბოთლი">4 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>77 P/C</b></div></div></article>
+    <article class="prod"><div class="shot"><img src="assets/products/5000-pet.png" alt="MTIS 5.000 PET" loading="lazy"></div>
+      <h3>5.000 PET</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="2 ბოთლი">2 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>84 P/C</b></div></div></article>
+  </div>
+  <div class="dots" id="dots"></div>
+</section>
+
+<section class="band light" id="quality">
+  <div class="wrap">
+    <div class="rev"><p class="tag" data-n="04" data-ka="სერტიფიკატები და ხარისხი">Certificates and quality</p>
+    <h2 data-ka='დადასტურებული <em>ბოლო წვეთამდე</em>'>Proven <em>to the last drop</em></h2></div>
+    <p class="lead rev d1" data-ka="„კოკა-კოლა ბოთლერს ჯორჯია“ სს, რომელიც მდებარეობს ნატახტარში, მცხეთა, საქართველო, სერტიფიცირებულია SGS United Kingdom Ltd-ის მიერ როგორც ხარისხის, ასევე სურსათის უვნებლობის მართვის სისტემებში. კომპანიას აქვს ISO 9001:2015 სერტიფიკატი ხარისხის მართვის სისტემისთვის და FSSC 22000 სერტიფიკატი სურსათის უვნებლობის პრაქტიკისთვის, რაც ადასტურებს საერთაშორისოდ აღიარებულ სტანდარტებთან შესაბამისობას.">Coca-Cola Bottlers Georgia JSC, located in Natakhtari, Mtskheta, Georgia, has been certified by SGS United Kingdom Ltd for both its quality and food safety management systems. The company holds the ISO 9001:2015 certification for its quality management system, and the FSSC 22000 certification for its food safety practices, demonstrating compliance with internationally recognized standards.</p>
+
+    <div class="certs">
+      <div class="cert rev d1" data-full="assets/certificates/cert-1.png">
+        <img src="assets/certificates/cert-1.png" alt="SGS certificate" loading="lazy"><p data-ka="SGS United Kingdom Ltd">SGS United Kingdom Ltd</p></div>
+      <div class="cert rev d2" data-full="assets/certificates/cert-2.png">
+        <img src="assets/certificates/cert-2.png" alt="SGS certificate" loading="lazy"><p data-ka="SGS United Kingdom Ltd">SGS United Kingdom Ltd</p></div>
+      <div class="card rev d3">
+        <span class="ico"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3.5s9 9.6 9 15.3A9 9 0 1 1 7 18.8C7 13.1 16 3.5 16 3.5z" fill="rgba(111,216,236,.14)" stroke="#6fd8ec" stroke-width="1.8"/><path d="M11.8 19.2a4.4 4.4 0 0 0 4.4 4.4" stroke="#6fd8ec" stroke-width="1.8" stroke-linecap="round"/></svg></span><h3 data-ka="ყველაზე დაბალი ბრომატი საქართველოში">Lowest bromate in Georgia</h3>
+        <p data-ka="ბრომატი ქიმიური ნაერთია, რომელიც შეიცავს ბრომატის იონს. ის შეიძლება წარმოიქმნას წყალში დეზინფექციისას, როდესაც ოზონი ან ქლორი რეაგირებს ბრომიდთან, რომელიც ბუნებრივად გვხვდება ზოგიერთ წყაროში. ბრომატი მიიჩნევა პოტენციურ კანცეროგენად და კვლევებმა ის ლაბორატორიულ ცხოველებში კიბოს განვითარებას დაუკავშირა. მთის ამაყობს, რომ არის ქართული ბრენდი ყველაზე დაბალი ბრომატის შემცველობით, ნულთან ახლოს.">Bromate is a chemical compound that contains the bromate ion. It can form in water during disinfection, when ozone or chlorine reacts with bromide that is naturally present in some water sources. Bromate is considered a potential human carcinogen and studies have linked it to cancer in laboratory animals. MTIS is proud to be the Georgian brand with the least amount of bromate in it, close to 0%.</p>
+      </div>
+    </div>
+
+    <div class="grid3">
+      <div class="card rev d1"><span class="ico"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3l11 4v9c0 7-4.7 11.6-11 13-6.3-1.4-11-6-11-13V7z" fill="rgba(111,216,236,.14)" stroke="#6fd8ec" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 16.2l3.6 3.6L21.5 13" stroke="#6fd8ec" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 data-ka="HACCP და FSMS">HACCP and FSMS</h3><p data-ka="სისტემები, რომლებიც შეესაბამება Coca-Cola KORE-ის პროტოკოლებს, ეროვნულ რეგულაციებსა და საკანონმდებლო მოთხოვნებს.">Systems aligned with Coca-Cola KORE protocols, national regulations and legal requirements.</p></div>
+      <div class="card rev d2"><span class="ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#D52B1E"/><path fill="#fff" d="M13.6 6.4h4.8v7.2h7.2v4.8h-7.2v7.2h-4.8v-7.2H6.4v-4.8h7.2z"/></svg></span><h3 data-ka="ტესტირება ჟენევაში">Tested in Geneva</h3><p data-ka="ხარისხის შენარჩუნების მიზნით, ჩვენი წყალი ყოველწლიურად მოწმდება ჟენევაში.">Our water undergoes annual quality testing in Geneva to ensure continued excellence.</p></div>
+      <div class="card rev d3"><span class="ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#039"/><g fill="#FC0"><polygon points="16.00,4.90 16.52,6.29 18.00,6.35 16.84,7.27 17.23,8.70 16.00,7.88 14.77,8.70 15.16,7.27 14.00,6.35 15.48,6.29"/><polygon points="20.50,6.11 21.02,7.49 22.50,7.56 21.34,8.48 21.73,9.90 20.50,9.09 19.27,9.90 19.66,8.48 18.50,7.56 19.98,7.49"/><polygon points="23.79,9.40 24.31,10.79 25.79,10.85 24.63,11.77 25.03,13.20 23.79,12.38 22.56,13.20 22.96,11.77 21.80,10.85 23.28,10.79"/><polygon points="25.00,13.90 25.52,15.29 27.00,15.35 25.84,16.27 26.23,17.70 25.00,16.88 23.77,17.70 24.16,16.27 23.00,15.35 24.48,15.29"/><polygon points="23.79,18.40 24.31,19.79 25.79,19.85 24.63,20.77 25.03,22.20 23.79,21.38 22.56,22.20 22.96,20.77 21.80,19.85 23.28,19.79"/><polygon points="20.50,21.69 21.02,23.08 22.50,23.15 21.34,24.07 21.73,25.49 20.50,24.68 19.27,25.49 19.66,24.07 18.50,23.15 19.98,23.08"/><polygon points="16.00,22.90 16.52,24.29 18.00,24.35 16.84,25.27 17.23,26.70 16.00,25.88 14.77,26.70 15.16,25.27 14.00,24.35 15.48,24.29"/><polygon points="11.50,21.69 12.02,23.08 13.50,23.15 12.34,24.07 12.73,25.49 11.50,24.68 10.27,25.49 10.66,24.07 9.50,23.15 10.98,23.08"/><polygon points="8.21,18.40 8.72,19.79 10.20,19.85 9.04,20.77 9.44,22.20 8.21,21.38 6.97,22.20 7.37,20.77 6.21,19.85 7.69,19.79"/><polygon points="7.00,13.90 7.52,15.29 9.00,15.35 7.84,16.27 8.23,17.70 7.00,16.88 5.77,17.70 6.16,16.27 5.00,15.35 6.48,15.29"/><polygon points="8.21,9.40 8.72,10.79 10.20,10.85 9.04,11.77 9.44,13.20 8.21,12.38 6.97,13.20 7.37,11.77 6.21,10.85 7.69,10.79"/><polygon points="11.50,6.11 12.02,7.49 13.50,7.56 12.34,8.48 12.73,9.90 11.50,9.09 10.27,9.90 10.66,8.48 9.50,7.56 10.98,7.49"/></g></svg></span><h3 data-ka="ექსპორტზე დაშვებული">Export approved</h3><p data-ka="ამ მკაცრი სტანდარტების წყალობით, ჩვენი პროდუქცია აკმაყოფილებს ევროკავშირში ექსპორტის კრიტერიუმებს.">Thanks to these rigorous standards, our products meet the criteria for export to the European Union.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band deep" id="partners">
+  <div class="wrap">
+    <div class="rev"><p class="tag" data-n="05" data-ka="პარტნიორები">Partners</p>
+    <h2 data-ka='<em>მსოფლიო დონის</em> გარემოცვაში'>In <em>world class</em> company</h2></div>
+
+    <div class="psg">
+      <div class="mosaic rev d1">
+        <figure class="shot-f big"><img src="assets/partners/psg-1.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
+        <figure class="shot-f"><img src="assets/partners/psg-2.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
+        <figure class="shot-f"><img src="assets/partners/psg-3.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
+      </div>
+      <div class="psg-copy rev d2">
+        <div class="lockup"><img src="assets/partners/psg-lockup.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></div>
+        <img class="badge" src="assets/scene/partners-img.png" alt="MTIS and PSG" loading="lazy">
+        <h3 data-ka="პარი სენ-ჟერმენი">Paris Saint-Germain</h3>
+        <p class="lead" data-ka="სიამაყით ვაცხადებთ ოფიციალურ პარტნიორობას პარი სენ-ჟერმენთან. ეს კავშირი აერთიანებს ქართული მინერალური წყლის სისუფთავესა და მსოფლიო დონის ფეხბურთის ვნებას. ერთად, მთის და PSG აღნიშნავს სრულყოფილებას, შედეგიანობას და მწვერვალზე დარჩენის სწრაფვას.">We are proud to announce our official partnership with Paris Saint-Germain. This union brings together the purity of Georgian mineral water and the passion of world class football. Together, MTIS and PSG celebrate excellence, performance, and a commitment to staying at the top.</p>
+        <span class="pill-note" data-ka="ერთადერთი ქართული ბრენდი, რომელიც დღემდე შეუერთდა">The only Georgian brand to join so far</span>
+      </div>
+    </div>
+
+    <p class="tag rev" style="margin-top:86px" data-ka="სასტუმრო პარტნიორები">Hospitality partners</p>
+    <div class="logowall rev">
+      <div><img src="assets/partners/ambassadori.png" alt="Ambassadori" loading="lazy"></div>
+      <div><img src="assets/partners/biltmore.png" alt="The Biltmore" loading="lazy"></div>
+      <div><img src="assets/partners/pullman.png" alt="Pullman" loading="lazy"></div>
+      <div><img src="assets/partners/radisson-red.png" alt="Radisson RED" loading="lazy"></div>
+      <div><img src="assets/partners/hilton-garden-inn.png" alt="Hilton Garden Inn" loading="lazy"></div>
+      <div><img src="assets/partners/adjara-group.png" alt="Adjara Group" loading="lazy"></div>
+      <div><img src="assets/partners/m-group.png" alt="M Group" loading="lazy"></div>
+      <div><img src="assets/partners/oro-strada.png" alt="Oro and Strada" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="finewaters">
+  <div class="wrap" style="text-align:center">
+    <div class="rev"><p class="tag" data-n="06" style="justify-content:center">FineWaters</p>
+    <h2 data-ka='მსოფლიოს<br><em>საუკეთესო წყლებს შორის</em>'>Among the world's<br><em>finest waters</em></h2></div>
+    <div class="fw rev d1">
+      <img class="wreath" src="assets/scene/partners-bg.png" alt="" loading="lazy">
+      <img class="fw-logo" src="assets/partners/finewaters.png" alt="FineWaters" loading="lazy">
+    </div>
+    <p class="lead rev d2" style="margin-inline:auto;text-align:center" data-ka="მთის არის FineWaters.com-ის ნაწილი, მსოფლიოს საუკეთესო დაუმუშავებელი მინერალური წყლების პრესტიჟული ჯგუფისა. FineWaters არის პლატფორმა, რომელიც დოქტორმა მაიკლ მაშამ 2002 წელს დააარსა და რომელიც პრემიუმ ბოთლის წყლების შეფასებაზეა ორიენტირებული.">MTIS is part of FineWaters.com, a prestigious group of the best unprocessed mineral waters in the world. FineWaters is a platform founded by Dr. Michael Mascha in 2002 that focuses on the appreciation of premium bottled waters.</p>
+    <div class="docs rev d3" style="justify-content:center">
+      <a class="btn" href="https://finewaters.com/" target="_blank" rel="noopener"><i></i>finewaters.com</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img class="logo" src="assets/logo.svg" alt="MTIS">
+        <p class="lead" style="margin-top:18px;max-width:34ch" data-ka="ბუნებრივი მინერალური წყალი ნატახტარიდან, მცხეთა, საქართველო.">Natural mineral water from Natakhtari, Mtskheta, Georgia.</p>
+        <span class="ico sm"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#fff"/><path fill="#f03" d="M13.4 0h5.2v32h-5.2z"/><path fill="#f03" d="M0 13.4h32v5.2H0z"/><g fill="#f03"><path d="M5.2 4.2h1.9v1.6h1.6v1.9H7.1v1.6H5.2V8.1H3.6V6.2h1.6z"/><path d="M24.9 4.2h1.9v1.6h1.6v1.9h-1.6v1.6h-1.9V8.1h-1.6V6.2h1.6z"/><path d="M5.2 23.3h1.9v1.6h1.6v1.9H7.1v1.6H5.2v-1.6H3.6v-1.9h1.6z"/><path d="M24.9 23.3h1.9v1.6h1.6v1.9h-1.6v1.6h-1.9v-1.6h-1.6v-1.9h1.6z"/></g></svg></span>
+      </div>
+      <nav>
+        <a href="#about" data-ka="ჩვენ შესახებ">About</a><a href="#products" data-ka="პროდუქცია">Products</a><a href="#quality" data-ka="ხარისხი">Quality</a>
+        <a href="#partners" data-ka="პარტნიორები">Partners</a><a href="#finewaters">FineWaters</a>
+        <a href="https://mtiswater.com/" target="_blank" rel="noopener">mtiswater.com</a>
+      </nav>
+    </div>
+    <div class="copy"><span data-ka="© 2026 მთის ბუნებრივი მინერალური წყალი">© 2026 MTIS Natural Mineral Water</span><span data-ka="ნატახტარი, მცხეთა, საქართველო">Natakhtari, Mtskheta, Georgia</span></div>
+  </div>
+</footer>
+
+<div id="lb"><span class="x">&times;</span><img alt="Certificate"></div>
+
+<script>
+const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* language: cache the English markup before anything rewrites it */
+const i18n = [...document.querySelectorAll('[data-ka]')];
+i18n.forEach(el => el.dataset.en = el.innerHTML);
+
+/* split a headline into animated letters */
+const splitLetters = el => {
+  let i = 0;
+  el.innerHTML = ('>' + el.innerHTML + '<').replace(/>([^<>]+)</g, (m, t) =>
+    '>' + [...t].map(c => c === ' '
+      ? ' '
+      : `<span style="animation-delay:${(i++) * 26 + 140}ms">${c}</span>`).join('') + '<').slice(1, -1);
+};
+
+function setLang(l){
+  document.documentElement.lang = l;
+  i18n.forEach(el => el.innerHTML = l === 'ka' ? el.dataset.ka : el.dataset.en);
+  document.querySelectorAll('#lang button').forEach(b => b.classList.toggle('on', b.dataset.l === l));
+  document.querySelectorAll('[data-split]').forEach(splitLetters);
+  try { localStorage.setItem('mtis-lang', l); } catch (e) {}
+}
+document.querySelectorAll('#lang button').forEach(b => b.onclick = () => setLang(b.dataset.l));
+let saved = 'en';
+try { saved = localStorage.getItem('mtis-lang') || 'en'; } catch (e) {}
+setLang(saved);
+
+/* scroll driven: progress bar, nav, hero parallax */
+const bar = document.getElementById('bar'), nav = document.getElementById('nav');
+const layers = [...document.querySelectorAll('[data-par]')], copy = document.getElementById('heroCopy');
+let tick = false;
+function onScroll(){
+  const y = scrollY, vh = innerHeight;
+  bar.style.width = (y / (document.body.scrollHeight - vh) * 100) + '%';
+  nav.classList.toggle('solid', y > 40);
+  if (y < vh * 1.3 && !rm) {
+    layers.forEach(l => l.style.translate = '0 ' + (y * +l.dataset.par) + 'px');
+    copy.style.translate = '0 ' + (y * 0.4) + 'px';
+    copy.style.opacity = Math.max(0, 1 - y / (vh * .6));
+  }
+  tick = false;
+}
+addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, {passive:true});
+onScroll();
+
+/* reveal on enter */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+/* number counters */
+const cio = new IntersectionObserver((es, o) => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  o.unobserve(e.target);
+  const end = +e.target.dataset.count, suf = e.target.dataset.suffix || '';
+  let t0 = null;
+  const step = t => {
+    if (t0 === null) t0 = t;
+    const p = Math.min(1, (t - t0) / 1100);
+    e.target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}), {threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+/* bubbles rising through the water */
+const sea = document.getElementById('sea');
+if (!rm) for (let i = 0; i < 26; i++) {
+  const b = document.createElement('i');
+  b.className = 'bubble';
+  const d = 4 + Math.random() * 11;
+  b.style.cssText = `left:${Math.random()*100}%;bottom:${-10 + Math.random()*40}%;width:${d}px;height:${d}px;
+    animation-duration:${9+Math.random()*14}s;animation-delay:${-Math.random()*22}s;
+    opacity:${.25+Math.random()*.45}`;
+  sea.appendChild(b);
+}
+
+/* cursor glow */
+const glow = document.getElementById('glow');
+addEventListener('pointermove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+}, {passive:true});
+
+/* product rail: focus centre card, dots, drag to scroll */
+const rail = document.getElementById('rail'), cards = [...rail.children], dots = document.getElementById('dots');
+cards.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', 'Show product ' + (i + 1));
+  b.onclick = () => c.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  dots.append(b);
+});
+const rio = new IntersectionObserver(es => es.forEach(e => {
+  const i = cards.indexOf(e.target);
+  e.target.classList.toggle('on', e.isIntersecting);
+  dots.children[i].classList.toggle('on', e.isIntersecting);
+}), {root: rail, threshold:.62});
+cards.forEach(c => rio.observe(c));
+
+let down = false, sx = 0, sl = 0;
+rail.addEventListener('pointerdown', e => { down = true; sx = e.clientX; sl = rail.scrollLeft; rail.classList.add('drag'); });
+addEventListener('pointerup', () => { down = false; rail.classList.remove('drag'); });
+rail.addEventListener('pointermove', e => { if (down) rail.scrollLeft = sl - (e.clientX - sx); });
+
+/* bottle tilt on pointer */
+cards.forEach(c => {
+  const img = c.querySelector('img');
+  c.addEventListener('pointermove', e => {
+    if (rm) return;
+    const r = c.getBoundingClientRect();
+    const dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
+    img.style.transform = `translateY(-8px) rotateY(${dx*16}deg) rotateX(${-dy*12}deg) scale(1.04)`;
+  });
+  c.addEventListener('pointerleave', () => img.style.transform = '');
+});
+
+/* certificate lightbox */
+const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+document.querySelectorAll('.cert').forEach(c => c.onclick = () => {
+  lbImg.src = c.dataset.full; lb.classList.add('on');
+});
+const close = () => lb.classList.remove('on');
+lb.onclick = close;
+addEventListener('keydown', e => e.key === 'Escape' && close());
+
+</script>
+</body>
+</html>
