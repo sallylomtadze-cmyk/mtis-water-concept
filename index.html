@@ -10,7 +10,7 @@
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:FiraGO;src:url(assets/fonts/firago-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:FiraGO;src:url(assets/fonts/firago-500.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
@@ -26,8 +26,9 @@
 html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--text);font-family:"Inter","FiraGO","Noto Sans Georgian",system-ui,sans-serif;
   font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,.dsp{font-family:"Instrument Serif","FiraGO","Noto Sans Georgian",Georgia,serif;font-weight:400;
-  line-height:1.02;letter-spacing:-.018em}
+h1,h2,.dsp{font-family:"Fraunces","FiraGO","Noto Sans Georgian",Georgia,serif;font-weight:400;
+  line-height:1.04;letter-spacing:-.022em;font-variation-settings:"opsz" 144,"SOFT" 28,"WONK" 1}
+h2 em,h1 .thin{font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1}
 h3{font-family:"Inter","FiraGO",sans-serif;font-weight:500;letter-spacing:.01em;line-height:1.25}
 html[lang=ka] h1,html[lang=ka] h2{font-weight:600;letter-spacing:.005em;line-height:1.12}
 a{color:inherit;text-decoration:none}
@@ -95,7 +96,9 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 @keyframes drift{from{transform:translate3d(-4%,4px,0)}to{transform:translate3d(5%,-10px,0)}}
 
 /* the water body: everything behind it is refracted */
-.sea{position:absolute;left:0;right:0;top:var(--wl);bottom:0;z-index:5;overflow:hidden;
+.sea{position:absolute;left:0;right:0;top:calc(var(--wl) - 6px);bottom:0;z-index:5;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.55) 22px,#000 54px);
+  mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.55) 22px,#000 54px);
   backdrop-filter:blur(2.4px) saturate(1.25);-webkit-backdrop-filter:blur(2.4px) saturate(1.25);
   background:linear-gradient(180deg,rgba(18,86,116,.52) 0%,rgba(9,52,76,.74) 26%,rgba(4,26,40,.9) 62%,rgba(3,12,20,.97) 100%)}
 .refl{position:absolute;left:0;right:0;top:0;height:46%;opacity:.42;will-change:transform;
@@ -106,10 +109,17 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   -webkit-mask-image:linear-gradient(180deg,#000,transparent 72%);mask-image:linear-gradient(180deg,#000,transparent 72%);
   animation:rays 15s ease-in-out infinite alternate}
 @keyframes rays{from{transform:translateX(-26px) skewX(-1deg)}to{transform:translateX(34px) skewX(2deg)}}
-.surface{position:absolute;left:0;right:0;top:var(--wl);height:2px;z-index:6;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(190,245,255,.75) 18%,rgba(220,250,255,.95) 50%,rgba(190,245,255,.75) 82%,transparent);
-  box-shadow:0 0 26px 6px rgba(120,220,245,.38);animation:surf 7s ease-in-out infinite}
-@keyframes surf{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(3px) scaleX(1.01)}}
+.surface{position:absolute;left:0;right:0;top:calc(var(--wl) - 46px);height:104px;z-index:6;pointer-events:none;
+  mix-blend-mode:screen;opacity:.85}
+.surface svg{position:absolute;inset:0;width:200%;height:100%;display:block}
+.surface .w1{animation:flow 26s linear infinite}
+.surface .w2{animation:flow 38s linear infinite reverse;opacity:.7}
+.surface .w3{animation:flow 17s linear infinite;opacity:.5}
+@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.glint{position:absolute;left:0;right:0;top:var(--wl);height:1px;z-index:6;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(200,245,255,.5) 25%,rgba(225,250,255,.7) 50%,rgba(200,245,255,.5) 75%,transparent);
+  filter:blur(1.6px);animation:glint 9s ease-in-out infinite}
+@keyframes glint{0%,100%{opacity:.55;transform:translateY(0)}50%{opacity:.85;transform:translateY(2px)}}
 .bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.85),rgba(180,235,255,.22) 48%,transparent 70%);
   border:1px solid rgba(210,245,255,.35);animation:rise linear infinite}
 @keyframes rise{from{transform:translateY(0) scale(.6);opacity:0}14%{opacity:.75}to{transform:translateY(-54vh) scale(1);opacity:0}}
@@ -118,7 +128,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   -webkit-mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 48%,rgba(0,0,0,.45) 74%,transparent 100%);
   mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 48%,rgba(0,0,0,.45) 74%,transparent 100%);
   animation:bob 9s ease-in-out infinite;will-change:transform;touch-action:pan-y}
-.hero-bottle canvas{width:100%;height:100%;display:block;cursor:grab}
+.hero-bottle canvas{width:100%;height:100%;display:block;cursor:grab;opacity:0;will-change:opacity,filter}
 .hero-bottle canvas:active{cursor:grabbing}
 .hero-bottle img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .8s;
   filter:brightness(1.4) contrast(1.06) drop-shadow(0 26px 40px rgba(0,0,0,.5))}
@@ -149,7 +159,8 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 .diagram{position:relative;margin-top:70px;border-radius:clamp(18px,2.4vw,30px);overflow:hidden;
   border:1px solid rgba(10,45,62,.12);background:linear-gradient(180deg,#fbfdfe,#dfeaf2);
   box-shadow:0 44px 100px rgba(9,42,60,.16)}
-.diagram svg.cut{display:block;width:100%;height:auto}
+.diagram .stage{position:relative;width:100%;aspect-ratio:16/10;min-height:300px}
+.diagram .stage canvas{width:100%;height:100%;display:block}
 .pinmark circle{fill:#fff;stroke:#0d6f88;stroke-width:2}
 .pinmark text{fill:#0a2634;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;text-anchor:middle}
 .pinmark{opacity:0;transform:translateY(8px);transition:opacity .7s,transform .7s}
@@ -163,7 +174,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 .call{position:relative;padding-top:26px;border-top:1px solid var(--line)}
 .call .n{position:absolute;top:-11px;left:0;width:22px;height:22px;border-radius:50%;
   display:grid;place-items:center;font-size:10px;font-weight:600;color:#fff;background:var(--accent)}
-.call b{display:block;font-family:"Instrument Serif","FiraGO",serif;font-weight:400;
+.call b{display:block;font-family:"Fraunces","FiraGO",serif;font-weight:400;font-variation-settings:"opsz" 72,"SOFT" 30,"WONK" 1;
   font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.05;color:var(--text);letter-spacing:-.02em}
 .call span{display:block;margin-top:12px;font-size:.84rem;line-height:1.7;color:var(--muted)}
 @media(max-width:900px){.calls{grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px}}
@@ -218,7 +229,7 @@ h2 em{font-style:normal;color:var(--accent)}
   box-shadow:0 34px 80px rgba(0,0,0,.55),0 0 60px rgba(90,190,220,.10)}
 .stat{background:rgba(7,22,33,.82);backdrop-filter:blur(18px);padding:34px 24px;text-align:center;transition:background .4s}
 .stat:hover{background:rgba(12,34,48,.9)}
-.stat b{display:block;font-family:"Instrument Serif","FiraGO",serif;font-size:clamp(1.7rem,3vw,2.7rem);text-wrap:balance;font-weight:400;color:var(--text);line-height:1;letter-spacing:-.02em}
+.stat b{display:block;font-family:"Fraunces","FiraGO",serif;font-size:clamp(1.7rem,3vw,2.7rem);text-wrap:balance;font-weight:400;color:var(--text);line-height:1;letter-spacing:-.02em}
 .stat span{display:block;margin-top:11px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
 /* products rail */
@@ -286,7 +297,7 @@ h2 em{font-style:normal;color:var(--accent)}
   opacity:0;transition:opacity .5s}
 .shot-f:hover::after{opacity:1}
 .lockup{border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-bottom:28px}
-.psg-copy h3{font-family:"Instrument Serif","FiraGO",serif;font-weight:400;letter-spacing:-.02em;
+.psg-copy h3{font-family:"Fraunces","FiraGO",serif;font-weight:400;font-variation-settings:"opsz" 72,"SOFT" 30,"WONK" 1;letter-spacing:-.02em;
   font-size:clamp(1.9rem,3.2vw,2.8rem);line-height:1.04;margin-top:4px}
 .psg-copy .pill-note{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:11px 20px;border-radius:999px;
   border:1px solid rgba(111,216,236,.38);background:rgba(111,216,236,.08);color:var(--accent);
@@ -365,7 +376,25 @@ footer nav a:hover{color:var(--accent)}
       <img src="assets/products/0750-gls.png" alt="MTIS glass bottle">
     </div>
   </div>
-  <div class="surface" aria-hidden="true"></div>
+  <div class="surface" aria-hidden="true">
+    <svg viewBox="0 0 2400 104" preserveAspectRatio="none">
+      <defs>
+        <filter id="sb1" x="-5%" y="-40%" width="110%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+        <filter id="sb2" x="-5%" y="-40%" width="110%" height="180%"><feGaussianBlur stdDeviation="13"/></filter>
+        <linearGradient id="sg" x1="0" x2="1">
+          <stop offset="0" stop-color="#bff0ff" stop-opacity="0"/><stop offset=".25" stop-color="#d8f7ff" stop-opacity=".85"/>
+          <stop offset=".6" stop-color="#eafcff" stop-opacity="1"/><stop offset="1" stop-color="#bff0ff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path class="w1" filter="url(#sb1)" fill="none" stroke="url(#sg)" stroke-width="3"
+        d="M0 52 C150 36 250 68 400 52 C550 36 650 68 800 52 C950 36 1050 68 1200 52 C1350 36 1450 68 1600 52 C1750 36 1850 68 2000 52 C2150 36 2250 68 2400 52"/>
+      <path class="w2" filter="url(#sb2)" fill="none" stroke="url(#sg)" stroke-width="8"
+        d="M0 58 C200 44 300 74 500 60 C700 46 800 76 1000 62 C1200 48 1300 78 1500 64 C1700 50 1800 80 2000 66 C2150 56 2300 64 2400 60"/>
+      <path class="w3" filter="url(#sb1)" fill="none" stroke="url(#sg)" stroke-width="2"
+        d="M0 46 C120 56 220 34 340 46 C460 58 560 34 680 46 C800 58 900 34 1020 46 C1140 58 1240 34 1360 46 C1480 58 1580 34 1700 46 C1820 58 1920 34 2040 46 C2160 58 2280 34 2400 46"/>
+    </svg>
+  </div>
+  <div class="glint" aria-hidden="true"></div>
 
   <div class="hero-cta">
     <a class="btn" href="#products" data-ka="&lt;i&gt;&lt;/i&gt;ჩვენი პროდუქცია"><i></i>Our products</a>
@@ -409,29 +438,7 @@ footer nav a:hover{color:var(--accent)}
     <p class="lead rev d1" data-ka="წყალი ნატახტარის ზედაპირიდან იწყებს ჩასვლას და ვულკანური აქტივობითა და ტექტონიკური ძვრებით ჩამოყალიბებულ ფენებს გაივლის. სწორედ იქ იძენს მინერალებს და სწორედ იქ იწმინდება, ჩვენამდე მოღწევამდე დიდი ხნით ადრე.">Water begins its descent at the surface of Natakhtari and passes through strata shaped by volcanic activity and tectonic shifts. That is where it takes on its minerals, and where it is purified, long before it reaches us.</p>
 
     <div class="diagram rev" id="diagram">
-      <svg class="cut" viewBox="0 0 1200 760" role="img" aria-label="Cross-section of the MTIS source">
-        <defs>
-          <clipPath id="topClip"><path d="M0 0 H1200 V252 C1020 302 880 252 660 290 C440 328 220 264 0 312 Z"/></clipPath>
-          <linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef6fa"/><stop offset="1" stop-color="#cfdfea"/></linearGradient>
-          <linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9cdda"/><stop offset="1" stop-color="#9bb4c6"/></linearGradient>
-          <linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93aec0"/><stop offset="1" stop-color="#7595ab"/></linearGradient>
-          <linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d90a7"/><stop offset="1" stop-color="#406a85"/></linearGradient>
-          <radialGradient id="gAq"><stop offset="0" stop-color="#5fdcf5" stop-opacity=".95"/><stop offset=".55" stop-color="#2fb7d8" stop-opacity=".5"/><stop offset="1" stop-color="#2fb7d8" stop-opacity="0"/></radialGradient>
-          <filter id="soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
-          <path id="flow" d="M300 288 C300 356 352 388 362 448 C372 512 452 552 492 596 C524 632 566 646 600 636 C736 598 842 470 900 372 C938 310 958 286 978 272"/>
-        </defs>
-
-        <image clip-path="url(#topClip)" href="assets/scene/landing.png" x="0" y="-26" width="1200" height="430" preserveAspectRatio="xMidYMid slice"/>
-        <path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252 L1200 332 C1020 382 880 332 660 370 C440 408 220 344 0 392 Z" fill="url(#s1)"/><path d="M0 312 C220 264 440 328 660 290 C880 252 1020 302 1200 252" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332 L1200 440 C1020 490 880 440 660 478 C440 516 220 452 0 500 Z" fill="url(#s2)"/><path d="M0 392 C220 344 440 408 660 370 C880 332 1020 382 1200 332" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440 L1200 546 C1020 596 880 546 660 584 C440 622 220 558 0 606 Z" fill="url(#s3)"/><path d="M0 500 C220 452 440 516 660 478 C880 440 1020 490 1200 440" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546 L1200 720 C1020 770 880 720 660 758 C440 796 220 732 0 780 Z" fill="url(#s4)"/><path d="M0 606 C220 558 440 622 660 584 C880 546 1020 596 1200 546" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/>
-        <g><ellipse cx="966" cy="686" rx="16.3" ry="4.3" fill="#3f6480" opacity="0.09"/><ellipse cx="428" cy="494" rx="15.6" ry="3.4" fill="#3f6480" opacity="0.10"/><ellipse cx="421" cy="448" rx="11.4" ry="2.4" fill="#3f6480" opacity="0.09"/><ellipse cx="125" cy="704" rx="17.8" ry="4.9" fill="#3f6480" opacity="0.10"/><ellipse cx="362" cy="719" rx="6.2" ry="3.6" fill="#3f6480" opacity="0.05"/><ellipse cx="429" cy="523" rx="13.2" ry="4.3" fill="#3f6480" opacity="0.08"/><ellipse cx="440" cy="665" rx="8.8" ry="2.9" fill="#3f6480" opacity="0.05"/><ellipse cx="214" cy="634" rx="13.9" ry="3.2" fill="#3f6480" opacity="0.09"/><ellipse cx="210" cy="530" rx="9.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="183" cy="688" rx="15.2" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="831" cy="434" rx="17.5" ry="4.5" fill="#3f6480" opacity="0.05"/><ellipse cx="469" cy="426" rx="11.6" ry="4.9" fill="#3f6480" opacity="0.08"/><ellipse cx="189" cy="689" rx="13.6" ry="4.3" fill="#3f6480" opacity="0.07"/><ellipse cx="218" cy="559" rx="10.0" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="281" cy="468" rx="9.0" ry="2.3" fill="#3f6480" opacity="0.05"/><ellipse cx="1037" cy="490" rx="14.2" ry="2.6" fill="#3f6480" opacity="0.09"/><ellipse cx="308" cy="614" rx="13.7" ry="2.3" fill="#3f6480" opacity="0.08"/><ellipse cx="475" cy="400" rx="9.2" ry="4.9" fill="#3f6480" opacity="0.11"/><ellipse cx="662" cy="410" rx="8.5" ry="3.2" fill="#3f6480" opacity="0.12"/><ellipse cx="245" cy="421" rx="17.9" ry="2.6" fill="#3f6480" opacity="0.07"/><ellipse cx="713" cy="551" rx="10.6" ry="2.2" fill="#3f6480" opacity="0.07"/><ellipse cx="537" cy="407" rx="13.2" ry="3.1" fill="#3f6480" opacity="0.09"/><ellipse cx="1030" cy="694" rx="7.6" ry="3.2" fill="#3f6480" opacity="0.10"/><ellipse cx="676" cy="516" rx="15.8" ry="2.7" fill="#3f6480" opacity="0.07"/><ellipse cx="442" cy="598" rx="16.6" ry="3.8" fill="#3f6480" opacity="0.08"/><ellipse cx="252" cy="455" rx="6.5" ry="4.9" fill="#3f6480" opacity="0.07"/><ellipse cx="842" cy="531" rx="11.0" ry="4.7" fill="#3f6480" opacity="0.09"/><ellipse cx="1105" cy="489" rx="17.2" ry="4.9" fill="#3f6480" opacity="0.06"/><ellipse cx="1021" cy="686" rx="13.8" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="474" cy="504" rx="15.0" ry="2.2" fill="#3f6480" opacity="0.08"/><ellipse cx="550" cy="430" rx="6.6" ry="2.8" fill="#3f6480" opacity="0.09"/><ellipse cx="309" cy="447" rx="10.3" ry="4.7" fill="#3f6480" opacity="0.13"/><ellipse cx="1108" cy="699" rx="17.4" ry="3.8" fill="#3f6480" opacity="0.12"/><ellipse cx="1012" cy="583" rx="14.4" ry="4.9" fill="#3f6480" opacity="0.05"/><ellipse cx="193" cy="646" rx="6.8" ry="2.9" fill="#3f6480" opacity="0.06"/><ellipse cx="188" cy="438" rx="11.4" ry="3.1" fill="#3f6480" opacity="0.05"/><ellipse cx="305" cy="574" rx="10.2" ry="4.1" fill="#3f6480" opacity="0.12"/><ellipse cx="894" cy="415" rx="16.4" ry="3.7" fill="#3f6480" opacity="0.10"/><ellipse cx="823" cy="594" rx="13.0" ry="3.8" fill="#3f6480" opacity="0.06"/><ellipse cx="276" cy="531" rx="16.6" ry="4.2" fill="#3f6480" opacity="0.08"/></g>
-        <ellipse cx="600" cy="638" rx="340" ry="64" fill="url(#gAq)" filter="url(#soft)"/>
-        <ellipse cx="600" cy="638" rx="252" ry="36" fill="url(#gAq)"/>
-
-        <use href="#flow" stroke="rgba(9,60,84,.6)" stroke-width="2.4" stroke-dasharray="2 7" fill="none"/>
-        <circle class="drop" r="6.5"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#flow"/></animateMotion></circle>
-
-        <g class="pinmark"><circle cx="300" cy="288" r="14"/><text x="300" y="293">1</text></g><g class="pinmark"><circle cx="362" cy="448" r="14"/><text x="362" y="453">2</text></g><g class="pinmark"><circle cx="600" cy="638" r="14"/><text x="600" y="643">3</text></g><g class="pinmark"><circle cx="978" cy="272" r="14"/><text x="978" y="277">4</text></g>
-      </svg>
+      <div class="stage" id="stage"><canvas></canvas></div>
 
       </div>
 
@@ -507,9 +514,9 @@ footer nav a:hover{color:var(--accent)}
 
     <div class="psg">
       <div class="mosaic rev d1">
-        <figure class="shot-f big"><img src="assets/partners/psg-1.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
+        <figure class="shot-f big"><img src="assets/partners/psg-3.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
         <figure class="shot-f"><img src="assets/partners/psg-2.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
-        <figure class="shot-f"><img src="assets/partners/psg-3.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
+        <figure class="shot-f"><img src="assets/partners/psg-1.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></figure>
       </div>
       <div class="psg-copy rev d2">
         <div class="lockup"><img src="assets/partners/psg-lockup.png" alt="MTIS and Paris Saint-Germain" loading="lazy"></div>
@@ -769,7 +776,7 @@ try {
   hx.fillStyle = hg; hx.fillRect(0, 0, 512, 512);
   const halo = new THREE.Mesh(new THREE.CircleGeometry(.6, 72),
     new THREE.MeshBasicMaterial({map: new THREE.CanvasTexture(hc), transparent: true, toneMapped: false}));
-  halo.position.set(0, .5, -1.15); scene.add(halo);
+  halo.position.set(0, .5, -1.15); halo.material.transparent = true; halo.material.opacity = 0; scene.add(halo);
 
   const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(2.4, 3.4, 2.2); scene.add(key);
   const rim = new THREE.DirectionalLight(0x9fe8ff, 1.6); rim.position.set(-2.6, 1.2, -1.8); scene.add(rim);
@@ -838,7 +845,6 @@ try {
   const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png');
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = -1; tex.offset.x = 1;
   const lr = radiusAt((LABEL.y0 + LABEL.y1) / 2) * 1.004;
   const theta = 2 * Math.asin(Math.min(.92, (LABEL.w / 2) / lr));
   const label = new THREE.Mesh(
@@ -886,18 +892,175 @@ try {
   renderer.render(scene, camera);
   host.classList.add('live');
 
+  /* the label stays facing the viewer: the bottle sways instead of spinning,
+     and a drag still turns it all the way round */
+  let spin = 0;
+  const t0 = performance.now();
+  const INTRO = reduce ? 0 : 2600;
+  const easeOut = x => 1 - Math.pow(1 - x, 3.2);
+
   const tick = () => {
     requestAnimationFrame(tick);
     if (!visible || document.hidden) return;
-    if (!reduce) bottle.rotation.y += .0016 + vel;
-    else bottle.rotation.y += vel;
-    vel *= .92;
+    const now = performance.now();
+
+    /* it rises out of the depth, settles and comes into focus */
+    const e = INTRO ? Math.min(1, (now - t0) / INTRO) : 1;
+    const k = easeOut(e);
+    bottle.position.y = -.02 - (1 - k) * .62;
+    bottle.scale.setScalar(.84 + k * .16);
+    halo.scale.setScalar(.55 + k * .45);
+    halo.material.opacity = k;
+    canvas.style.opacity = Math.min(1, k * 1.25);
+    canvas.style.filter = e < 1 ? `blur(${((1 - k) * 7).toFixed(2)}px)` : 'none';
+
+    spin += vel; vel *= .92;
+    bottle.rotation.y = spin + (1 - k) * 1.15 + (reduce ? 0 : Math.sin((now - t0) / 5200) * .34);
     renderer.render(scene, camera);
   };
   tick();
 } catch (e) {
   console.warn('3D bottle unavailable, keeping the still render', e);
 }
+</script>
+
+<script type="module">
+/* The source section: a 3D slab of the ground, the landscape on top,
+   the aquifer cut into one end. Same renderer stack as the bottle. */
+const stage = document.getElementById('stage');
+if (stage) try {
+  const THREE = await import('three');
+  const {RoundedBoxGeometry} = await import('three/addons/geometries/RoundedBoxGeometry.js');
+  const canvas = stage.querySelector('canvas');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(26, 1.6, .1, 60);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb6c6, 2.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 2.6);
+  sun.position.set(4, 7, 4); scene.add(sun);
+  const back = new THREE.DirectionalLight(0xbfe4f5, 1.1);
+  back.position.set(-5, 2, -3); scene.add(back);
+
+  /* strata on the cut faces */
+  const rc = document.createElement('canvas'); rc.width = 512; rc.height = 512;
+  const rx = rc.getContext('2d');
+  rx.fillStyle = '#8d7a67'; rx.fillRect(0, 0, 512, 512);
+  for (let y = 0; y < 512; y += 6 + Math.random() * 16) {
+    const h = 5 + Math.random() * 15, t = Math.random();
+    rx.fillStyle = `rgba(${78 + t * 80 | 0},${66 + t * 70 | 0},${54 + t * 62 | 0},.6)`;
+    rx.beginPath();
+    rx.moveTo(0, y);
+    for (let x = 0; x <= 512; x += 64) rx.lineTo(x, y + Math.sin(x / 70 + y) * 4);
+    rx.lineTo(512, y + h); 
+    for (let x = 512; x >= 0; x -= 64) rx.lineTo(x, y + h + Math.sin(x / 70 + y) * 4);
+    rx.closePath(); rx.fill();
+  }
+  for (let i = 0; i < 900; i++) {
+    rx.fillStyle = `rgba(48,38,30,${Math.random() * .2})`;
+    rx.fillRect(Math.random() * 512, Math.random() * 512, 1 + Math.random() * 3, 1 + Math.random() * 2);
+  }
+  const rock = new THREE.CanvasTexture(rc);
+  rock.colorSpace = THREE.SRGBColorSpace;
+  rock.wrapS = rock.wrapT = THREE.RepeatWrapping; rock.repeat.set(2.2, 1);
+
+  const land = await new THREE.TextureLoader().loadAsync('assets/scene/landing.png');
+  land.colorSpace = THREE.SRGBColorSpace;
+  land.repeat.set(1, .6); land.offset.set(0, .28);
+
+  const W = 3.5, H = .74, D = 2.2;
+  const side = new THREE.MeshStandardMaterial({map: rock, roughness: .95, metalness: 0});
+  const top  = new THREE.MeshStandardMaterial({map: land, roughness: .78, metalness: 0});
+  const slab = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .07),
+    [side, side, top, side.clone(), side, side]);
+  slab.material[3].map = rock;
+  scene.add(slab);
+
+  /* the aquifer: water held in the far end of the block */
+  const seaW = W * .52;
+  const sea = new THREE.Mesh(new RoundedBoxGeometry(seaW, H * .9, D, 8, .06),
+    new THREE.MeshPhysicalMaterial({color: 0x3aa8cc, roughness: .05, metalness: 0,
+      transmission: .9, thickness: .9, ior: 1.33, transparent: true,
+      attenuationColor: 0x0d5f7d, attenuationDistance: 1.2, envMapIntensity: 1.1}));
+  sea.position.set(W / 2 + seaW / 2 - .04, -H * .05, 0);
+  scene.add(sea);
+  /* the water surface itself, so the block reads as sea and not as a slab of paint */
+  const wc = document.createElement('canvas'); wc.width = wc.height = 256;
+  const wx = wc.getContext('2d');
+  const wgr = wx.createLinearGradient(0, 0, 0, 256);
+  wgr.addColorStop(0, '#7fd4ea'); wgr.addColorStop(.5, '#2f9cc2'); wgr.addColorStop(1, '#14688a');
+  wx.fillStyle = wgr; wx.fillRect(0, 0, 256, 256);
+  wx.globalAlpha = .5; wx.strokeStyle = '#eafaff'; wx.lineWidth = 2;
+  for (let y = 10; y < 256; y += 16) { wx.beginPath();
+    for (let x = 0; x <= 256; x += 8) wx.lineTo(x, y + Math.sin(x / 18 + y) * 3); wx.stroke(); }
+  const surf = new THREE.Mesh(new THREE.PlaneGeometry(seaW * .98, D * .98),
+    new THREE.MeshStandardMaterial({map: new THREE.CanvasTexture(wc), roughness: .18, metalness: .1}));
+  surf.rotation.x = -Math.PI / 2;
+  surf.position.set(sea.position.x, -H * .05 + H * .45 + .002, 0);
+  scene.add(surf);
+  /* the rock the sea sits on, so the two blocks read as one landscape */
+  const seaBase = new THREE.Mesh(new RoundedBoxGeometry(seaW, H * .3, D, 8, .05), side.clone());
+  seaBase.position.set(sea.position.x, -H / 2 + H * .15, 0);
+  scene.add(seaBase);
+
+  /* soft contact shadow */
+  const sc = document.createElement('canvas'); sc.width = sc.height = 256;
+  const sx = sc.getContext('2d');
+  const sg = sx.createRadialGradient(128, 128, 10, 128, 128, 124);
+  sg.addColorStop(0, 'rgba(14,52,74,.42)'); sg.addColorStop(1, 'rgba(14,52,74,0)');
+  sx.fillStyle = sg; sx.fillRect(0, 0, 256, 256);
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(W * 2.1, D * 2.1),
+    new THREE.MeshBasicMaterial({map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false}));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.set(W * .18, -H / 2 - .02, 0);
+  scene.add(shadow);
+
+  const group = new THREE.Group();
+  [slab, sea, surf, seaBase, shadow].forEach(o => group.add(o));
+  scene.add(group);
+  group.rotation.y = -.42;
+
+  /* frame the whole diorama whatever the container does */
+  const bounds = new THREE.Box3();
+  [slab, sea, seaBase].forEach(o => bounds.expandByObject(o));   /* the shadow plane must not inflate the frame */
+  const sphere = bounds.getBoundingSphere(new THREE.Sphere());
+  const dir = new THREE.Vector3(.14, .56, 1).normalize();
+  const fit = () => {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    const vfov = THREE.MathUtils.degToRad(camera.fov);
+    const hfov = 2 * Math.atan(Math.tan(vfov / 2) * camera.aspect);
+    const dist = sphere.radius / Math.sin(Math.min(vfov, hfov) / 2) * .78;
+    camera.position.copy(dir).multiplyScalar(dist).add(sphere.center);
+    camera.lookAt(sphere.center);
+    camera.updateProjectionMatrix();
+  };
+  new ResizeObserver(fit).observe(stage); fit();
+
+  let vis = true, prog = 0;
+  new IntersectionObserver(e => vis = e[0].isIntersecting, {threshold: .05}).observe(stage);
+  const t0 = performance.now();
+  const loop = () => {
+    requestAnimationFrame(loop);
+    if (!vis || document.hidden) return;
+    const r = stage.getBoundingClientRect();
+    prog = 1 - Math.min(1, Math.max(0, (r.top + r.height * .5) / innerHeight));  /* scroll drives the turn */
+    const t = (performance.now() - t0) / 1000;
+    group.rotation.y = -.42 + prog * .5 + (reduce ? 0 : Math.sin(t / 6) * .05);
+    group.rotation.x = .02 + prog * .05;
+    group.position.y = reduce ? 0 : Math.sin(t / 4) * .03;
+    renderer.render(scene, camera);
+  };
+  loop();
+} catch (e) { console.warn('source stage unavailable', e); }
 </script>
 </body>
 </html>
