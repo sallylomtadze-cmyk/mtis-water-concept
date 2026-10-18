@@ -103,11 +103,19 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 .refl{position:absolute;left:0;right:0;top:0;height:46%;opacity:.42;will-change:transform;
   background:url(assets/scene/water-reflection.jpg) center bottom/cover no-repeat;
   -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
-.rays{position:absolute;inset:-10% -20% 20%;opacity:.26;mix-blend-mode:screen;pointer-events:none;
-  background:repeating-linear-gradient(104deg,transparent 0 38px,rgba(190,240,255,.5) 38px 46px,transparent 46px 96px);
-  -webkit-mask-image:linear-gradient(180deg,#000,transparent 72%);mask-image:linear-gradient(180deg,#000,transparent 72%);
-  animation:rays 15s ease-in-out infinite alternate}
-@keyframes rays{from{transform:translateX(-26px) skewX(-1deg)}to{transform:translateX(34px) skewX(2deg)}}
+.caustics{position:absolute;inset:-14% -24% 18%;pointer-events:none;mix-blend-mode:screen;
+  -webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.45) 46%,transparent 78%);
+  mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.45) 46%,transparent 78%)}
+.caustics svg{position:absolute;inset:0;width:100%;height:100%}
+.caustics .c1{opacity:.3;animation:caust1 34s ease-in-out infinite alternate}
+.caustics .c2{opacity:.2;animation:caust2 48s ease-in-out infinite alternate}
+@keyframes caust1{
+  0%{transform:translate3d(-2%,0,0) scale(1.04) skewX(0deg)}
+  50%{transform:translate3d(1.5%,-1.2%,0) scale(1.12) skewX(1.6deg)}
+  100%{transform:translate3d(3%,.8%,0) scale(1.06) skewX(-1.2deg)}}
+@keyframes caust2{
+  0%{transform:translate3d(2%,1%,0) scale(1.16) skewY(1deg)}
+  100%{transform:translate3d(-3%,-1%,0) scale(1.05) skewY(-1.4deg)}}
 .surface{position:absolute;left:0;right:0;top:calc(var(--wl) - 46px);height:104px;z-index:6;pointer-events:none;
   mix-blend-mode:screen;opacity:.85}
 .surface svg{position:absolute;inset:0;width:200%;height:100%;display:block}
@@ -253,6 +261,10 @@ h2 em{font-style:normal;color:var(--accent)}
 .prod .pack div{display:flex;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line)}
 .prod .pack b{font-weight:500;color:var(--text);letter-spacing:.06em}
 .dots{display:flex;gap:9px;justify-content:center;margin-top:8px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,5vw,72px);margin-top:clamp(44px,6vh,74px);
+  padding-top:clamp(28px,4vh,44px);border-top:1px solid var(--line)}
+.twocol p{color:var(--muted);font-size:clamp(.95rem,1.2vw,1.04rem);line-height:1.85;text-wrap:pretty}
+@media(max-width:820px){.twocol{grid-template-columns:1fr;gap:20px}}
 .dots button{width:7px;height:7px;border-radius:50%;border:0;background:rgba(140,200,225,.3);cursor:pointer;transition:.4s;padding:0}
 .dots button.on{background:var(--accent);width:24px;border-radius:999px;box-shadow:0 0 12px rgba(111,216,236,.7)}
 
@@ -367,7 +379,24 @@ footer nav a:hover{color:var(--accent)}
 
   <div class="sea" id="sea" aria-hidden="true">
     <div class="refl" data-par="-0.10"></div>
-    <div class="rays"></div>
+    <div class="caustics">
+      <svg class="c1" viewBox="0 0 600 400" preserveAspectRatio="none">
+        <filter id="caA" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".012 .05" numOctaves="2" seed="11"/>
+          <feColorMatrix values="0 0 0 0 .78  0 0 0 0 .94  0 0 0 0 1  0 0 0 2.6 -1.25"/>
+          <feGaussianBlur stdDeviation="1.6"/>
+        </filter>
+        <rect width="600" height="400" filter="url(#caA)"/>
+      </svg>
+      <svg class="c2" viewBox="0 0 600 400" preserveAspectRatio="none">
+        <filter id="caB" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".02 .075" numOctaves="2" seed="29"/>
+          <feColorMatrix values="0 0 0 0 .72  0 0 0 0 .92  0 0 0 0 1  0 0 0 2.2 -1.1"/>
+          <feGaussianBlur stdDeviation="3"/>
+        </filter>
+        <rect width="600" height="400" filter="url(#caB)"/>
+      </svg>
+    </div>
     <div class="hero-glow"></div>
     <div class="hero-bottle" id="bottle3d">
       <canvas></canvas>
@@ -490,7 +519,7 @@ footer nav a:hover{color:var(--accent)}
   <div class="wrap">
     <div class="rev"><p class="tag" data-n="03" data-ka="ჩვენი პროდუქცია">Our products</p>
     <h2 data-ka='ყველა ფორმატი,<br><em>ერთი წყარო</em>'>Every format,<br><em>same source</em></h2></div>
-    <p class="lead rev d1" data-ka="ჩვენ ვიცავთ ბაზარზე არსებულ წყლის ხარისხის უმაღლეს სტანდარტებს. კომპანიაში დანერგილია HACCP და FSMS სისტემები, რომლებიც შეესაბამება Coca-Cola KORE-ის მკაცრ ხარისხის პროტოკოლებს, ასევე ეროვნულ რეგულაციებსა და საკანონმდებლო მოთხოვნებს. ხარისხის შენარჩუნების მიზნით, ჩვენი წყალი ყოველწლიურად მოწმდება ჟენევაში. ამ მკაცრი სტანდარტების წყალობით, ჩვენი პროდუქცია აკმაყოფილებს ევროკავშირში ექსპორტის კრიტერიუმებს.">We adhere to the highest water quality standards in the market. Our company has implemented HACCP and FSMS systems, aligned with Coca-Cola KORE's strict quality protocols as well as national regulations and legal requirements. To ensure continued excellence, our water undergoes annual quality testing in Geneva. Thanks to these rigorous standards, our products meet the criteria for export to the European Union.</p>
+    
   </div>
 
   <div class="rail" id="rail">
@@ -510,6 +539,11 @@ footer nav a:hover{color:var(--accent)}
       <h3>5.000 PET</h3><div class="pack"><div><span data-ka="ყუთი">Case</span><b data-ka="2 ბოთლი">2 bottles</b></div><div><span data-ka="პალეტი">Pallet</span><b>84 P/C</b></div></div></article>
   </div>
   <div class="dots" id="dots"></div>
+
+    <div class="wrap twocol rev">
+      <p data-ka="ჩვენ ვიცავთ ბაზარზე არსებულ წყლის ხარისხის უმაღლეს სტანდარტებს. კომპანიაში დანერგილია HACCP და FSMS სისტემები, რომლებიც შეესაბამება Coca-Cola KORE-ის მკაცრ ხარისხის პროტოკოლებს, ასევე ეროვნულ რეგულაციებსა და საკანონმდებლო მოთხოვნებს.">We adhere to the highest water quality standards in the market. Our company has implemented HACCP and FSMS systems, aligned with Coca-Cola KORE's strict quality protocols as well as national regulations and legal requirements.</p>
+      <p data-ka="ხარისხის შენარჩუნების მიზნით, ჩვენი წყალი ყოველწლიურად მოწმდება ჟენევაში. ამ მკაცრი სტანდარტების წყალობით, ჩვენი პროდუქცია აკმაყოფილებს ევროკავშირში ექსპორტის კრიტერიუმებს.">To ensure continued excellence, our water undergoes annual quality testing in Geneva. Thanks to these rigorous standards, our products meet the criteria for export to the European Union.</p>
+    </div>
 </section>
 
 <section class="band light" id="quality">
