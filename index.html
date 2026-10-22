@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta name="build" content="2026-10-22.0744">
 <title>MTIS Natural Mineral Water</title>
 <meta name="description" content="MTIS Natural Mineral Water. Sourced from ancient subterranean rock formations beneath Georgia's Natakhtari region.">
 <link rel="icon" href="assets/logo.svg">
@@ -79,7 +81,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
 /* ---------- HERO: glacier above, water below ---------- */
 .hero{position:relative;height:100svh;min-height:640px;overflow:hidden;isolation:isolate;--wl:36%}
 .glacier{position:absolute;left:0;right:0;top:0;height:46%;z-index:1;
-  background:url(assets/scene/hero-glacier.jpg) center 42%/cover no-repeat;will-change:transform;
+  background:url(assets/scene/hero-glacier.jpg?v=2026-10-22.0744) center 42%/cover no-repeat;will-change:transform;
   -webkit-mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.35) 86%,transparent);
   mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.35) 86%,transparent)}
 .glacier::after{content:"";position:absolute;inset:0;background:
@@ -101,7 +103,7 @@ html[lang=ka] .call b,html[lang=ka] .stat b,html[lang=ka] .partner .k,html[lang=
   backdrop-filter:blur(2.4px) saturate(1.25);-webkit-backdrop-filter:blur(2.4px) saturate(1.25);
   background:linear-gradient(180deg,rgba(18,86,116,.52) 0%,rgba(9,52,76,.74) 26%,rgba(4,26,40,.9) 62%,rgba(3,12,20,.97) 100%)}
 .refl{position:absolute;left:0;right:0;top:0;height:46%;opacity:.42;will-change:transform;
-  background:url(assets/scene/water-reflection.jpg) center bottom/cover no-repeat;
+  background:url(assets/scene/water-reflection.jpg?v=2026-10-22.0744) center bottom/cover no-repeat;
   -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
 .caustics{position:absolute;inset:-14% -24% 18%;pointer-events:none;mix-blend-mode:screen;
   -webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.45) 46%,transparent 78%);
@@ -336,6 +338,7 @@ footer{border-top:1px solid var(--line);background:var(--deep);padding:74px 0 46
 footer .logo{width:120px;color:#fff}
 footer nav{display:flex;flex-wrap:wrap;gap:26px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 footer nav a:hover{color:var(--accent)}
+.build{opacity:.5;font-variant-numeric:tabular-nums}
 .copy{margin-top:52px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
   font-size:10px;letter-spacing:.14em;color:#4e6a79;text-transform:uppercase}
 
@@ -596,7 +599,7 @@ footer nav a:hover{color:var(--accent)}
       <div><img src="assets/partners/ambassadori.png" alt="Ambassadori" loading="lazy"></div>
       <div><img src="assets/partners/biltmore.png" alt="The Biltmore" loading="lazy"></div>
       <div><img src="assets/partners/pullman.png" alt="Pullman" loading="lazy"></div>
-      <div><img src="assets/partners/radisson-red.png" alt="Radisson RED" loading="lazy"></div>
+      <div><img src="assets/partners/radisson-red.png?v=2026-10-22.0744" alt="Radisson RED" loading="lazy"></div>
       <div><img src="assets/partners/hilton-garden-inn.png" alt="Hilton Garden Inn" loading="lazy"></div>
       <div><img src="assets/partners/adjara-group.png" alt="Adjara Group" loading="lazy"></div>
       <div><img src="assets/partners/m-group.png" alt="M Group" loading="lazy"></div>
@@ -634,7 +637,8 @@ footer nav a:hover{color:var(--accent)}
         <a href="https://mtiswater.com/" target="_blank" rel="noopener">mtiswater.com</a>
       </nav>
     </div>
-    <div class="copy"><span data-ka="© 2026 მთის ბუნებრივი მინერალური წყალი">© 2026 MTIS Natural Mineral Water</span><span data-ka="ნატახტარი, მცხეთა, საქართველო">Natakhtari, Mtskheta, Georgia</span></div>
+    <div class="copy"><span data-ka="© 2026 მთის ბუნებრივი მინერალური წყალი">© 2026 MTIS Natural Mineral Water</span><span data-ka="ნატახტარი, მცხეთა, საქართველო">Natakhtari, Mtskheta, Georgia</span>
+      <span class="build">build 2026-10-22.0744</span></div>
   </div>
 </footer>
 
@@ -906,7 +910,7 @@ try {
   bottle.add(collar);
 
   /* the printed label, wrapped on the body at its real height */
-  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png');
+  const tex = await new THREE.TextureLoader().loadAsync('assets/3d/label.png?v=2026-10-22.0744');
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const lr = radiusAt((LABEL.y0 + LABEL.y1) / 2) * 1.004;
